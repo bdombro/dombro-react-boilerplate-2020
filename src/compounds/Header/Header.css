@@ -1,0 +1,15 @@
+.header ul {
+    padding: 0;
+}
+.header li {
+    display: inline;
+}
+.header li:not(:last-of-type):after {
+    content: " | ";
+}
+.header li a {
+    color: blue;
+}
+.header li.active a {
+    text-decoration: underline;
+}
