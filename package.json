@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "analyze": "node scripts/analyze.js",
     "test": "react-scripts test",
     "lint": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx src"
   },
@@ -63,7 +64,8 @@
     "lint-staged": ">=10",
     "prettier": "^2.0.5",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "husky": {
     "hooks": {
