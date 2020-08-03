@@ -2,6 +2,7 @@ import React from "react";
 import { hot } from "react-hot-loader";
 import useMetaTags from "react-metatags-hook";
 import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil/dist";
 
 import Stacks from "./stacks";
 
@@ -9,8 +10,7 @@ function App() {
   useMetaTags(
     {
       title: "Boilerplate",
-      description:
-        "A complete boilerplate for react without styles, ready to be customized.",
+      description: "A complete boilerplate for react without styles, ready to be customized.",
       metas: [
         { name: "keywords", content: "a, list, of, keywords" },
         { name: "robots", content: "index, follow" },
@@ -31,9 +31,11 @@ function App() {
     []
   );
   return (
-    <BrowserRouter>
-      <Stacks />
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Stacks />
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 

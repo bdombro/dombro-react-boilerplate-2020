@@ -1,13 +1,15 @@
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
-import { LayoutDefault } from "../../../layout/LayoutDefault";
+import { DefaultLayout } from "../../../layout/DefaultLayout";
 
-type RouteParams = {}; // for example id: string
+const titleDefault = "Dashboard";
+const className = "admin dashboard";
 
-const Dashboard: React.FC<RouteComponentProps<RouteParams>> = () => {
+const Loaded: Dashboard = () => {
   return (
-    <LayoutDefault title="Admin Dashboard">
+    <DefaultLayout title={titleDefault} className={className}>
+      <div>Welcome to the dashboard!</div>
       <ul>
         <li>
           <Link to="/admin/hotreloadtest">Goto HotReloadTest</Link>
@@ -16,7 +18,27 @@ const Dashboard: React.FC<RouteComponentProps<RouteParams>> = () => {
           <Link to="/admin/scrollrestoretest">Goto ScrollRestoreTest</Link>
         </li>
       </ul>
-    </LayoutDefault>
+    </DefaultLayout>
   );
 };
+
+const Loading: Dashboard = () => {
+  return (
+    <DefaultLayout className={className} title={titleDefault}>
+      <div>Loading...</div>
+    </DefaultLayout>
+  );
+};
+
+const Dashboard: Dashboard = (props) => {
+  return (
+    <React.Suspense fallback={<Loading {...props} />}>
+      <Loaded {...props} />
+    </React.Suspense>
+  );
+};
+
 export default Dashboard;
+
+export type DashboardProps = RouteComponentProps<{} /* for example id: string */>;
+export type Dashboard = React.FC<DashboardProps>;

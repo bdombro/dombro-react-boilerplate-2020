@@ -3,9 +3,7 @@ import "./Header.css";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-type props = {};
-
-export const Header: React.FC<props> = () => {
+export const Header: Header = () => {
   return (
     <div className="header">
       <ul>
@@ -19,7 +17,15 @@ export const Header: React.FC<props> = () => {
             Admin
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/auth" activeClassName="active">
+            Auth
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
 };
+
+export type HeaderProps = {};
+export type Header = React.FC<HeaderProps>;

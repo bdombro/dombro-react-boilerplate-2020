@@ -1,7 +1,8 @@
 import React from "react";
 
-export type props = {};
-
-export const TestComponent: React.FC<props> = () => {
+export const TestComponent: TestComponent = () => {
   return <div>Change me!</div>;
 };
+
+export type TestComponentProps = {};
+export type TestComponent = React.FC<TestComponentProps>;

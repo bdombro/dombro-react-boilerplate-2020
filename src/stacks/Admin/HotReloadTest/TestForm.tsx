@@ -1,11 +1,12 @@
 import React from "react";
 
-export type props = {};
-
-export const TestForm: React.FC<props> = () => {
+export const TestForm: TestForm = () => {
   return (
     <form>
       <input type="text" />
     </form>
   );
 };
+
+export type TestFormProps = {};
+export type TestForm = React.FC<TestFormProps>;

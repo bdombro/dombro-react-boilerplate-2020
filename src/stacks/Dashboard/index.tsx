@@ -3,7 +3,7 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Dashboard from "./Dashboard";
 
-const stack: React.FC<RouteComponentProps> = (props) => {
+const Stack: Stack = (props) => {
   const { match } = props;
   return (
     <Switch>
@@ -11,4 +11,7 @@ const stack: React.FC<RouteComponentProps> = (props) => {
     </Switch>
   );
 };
-export default stack;
+export default Stack;
+
+export type StackProps = RouteComponentProps<{}>;
+export type Stack = React.FC<StackProps>;

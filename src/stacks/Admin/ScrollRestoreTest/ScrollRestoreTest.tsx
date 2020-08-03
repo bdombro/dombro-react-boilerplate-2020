@@ -1,16 +1,17 @@
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
-import { LayoutDefault } from "../../../layout/LayoutDefault";
+import { DefaultLayout } from "../../../layout/DefaultLayout";
 
-type RouteParams = {}; // for example id: string
+const titleDefault = "ScrollRestore Test";
+const className = "admin scrollrestoretest";
 
-const ScrollRestoreTest: React.FC<RouteComponentProps<RouteParams>> = () => {
+const Loaded: ScrollRestoreTest = () => {
   return (
-    <LayoutDefault title="ScrollRestoreTest">
+    <DefaultLayout title={titleDefault} className={className}>
       <div>
-        Scroll to the bottom of this page, click the link, then hit the back
-        button in your browser. The scroll position should be preserved.
+        Scroll to the bottom of this page, click the link, then hit the back button in your browser. The scroll position
+        should be preserved.
       </div>
       <div>1</div>
       <div>2</div>
@@ -79,7 +80,27 @@ const ScrollRestoreTest: React.FC<RouteComponentProps<RouteParams>> = () => {
       <div>65</div>
       <div>66</div>
       <Link to="/admin">Goto dashboard</Link>
-    </LayoutDefault>
+    </DefaultLayout>
   );
 };
+
+const Loading: ScrollRestoreTest = () => {
+  return (
+    <DefaultLayout title={titleDefault} className={className}>
+      <div>Loading...</div>
+    </DefaultLayout>
+  );
+};
+
+const ScrollRestoreTest: ScrollRestoreTest = (props) => {
+  return (
+    <React.Suspense fallback={<Loading {...props} />}>
+      <Loaded {...props} />
+    </React.Suspense>
+  );
+};
+
 export default ScrollRestoreTest;
+
+export type ScrollRestoreTestProps = RouteComponentProps<{} /* for example id: string */>;
+export type ScrollRestoreTest = React.FC<ScrollRestoreTestProps>;
