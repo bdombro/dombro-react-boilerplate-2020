@@ -15,11 +15,11 @@ export const schema = Yup.object().shape({
   password: Yup.string().required("Password is required."),
 });
 
-export const onSubmitFactory: OnSubmitFactory = ({ history, setAuth }) => async (values, { setSubmitting }) => {
+export const onSubmitFactory: OnSubmitFactory = ({ history, auth, setAuth }) => async (values, { setSubmitting }) => {
   setSubmitting(false);
   console.dir(values);
-  const adminPermissions = ["adminDashboard:read", "scrollRestoreTest.read", "hotreloadTest.read"];
-  const userPermissions = ["dashboard:read"];
+  const adminPermissions = ["admin", "admin.dashboard", "admin.scrollRestoreTest", "admin.hotReloadTest"];
+  const userPermissions = ["dashboard"];
   const adminUserAuth: authStateValue = {
     username: "admin",
     token: "faketoken",
@@ -36,7 +36,6 @@ export const onSubmitFactory: OnSubmitFactory = ({ history, setAuth }) => async 
   };
   const authNext = values.email === "admin@example.com" ? adminUserAuth : normalUserAuth;
   setAuth(authNext);
-  history.push("/");
 };
 
 export interface FormValues {
@@ -45,5 +44,10 @@ export interface FormValues {
 }
 
 export type OnSubmit = (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => Promise<void>;
-export type OnSubmitFactoryProps = { history: H.History; setAuth: SetterOrUpdater<authStateValue> };
+export type OnSubmitFactoryProps = {
+  history: H.History;
+  auth: authStateValue;
+  setAuth: SetterOrUpdater<authStateValue>;
+};
+// TODO: Consier lodash instead of a factory like this
 export type OnSubmitFactory = ({ history }: OnSubmitFactoryProps) => OnSubmit;

@@ -1,14 +1,19 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { useRecoilState } from "recoil/dist";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
+import { authState } from "../../../state";
+import NotFound from "../../NotFound";
 import { TestComponent } from "./TestComponent";
 import { TestForm } from "./TestForm";
 
 const titleDefault = "HotReload Test";
 const className = "admin hotreloadtest";
 
-const Loaded: HotReloadTest = () => {
+const HotReloadTest: HotReloadTest = (props) => {
+  const [auth] = useRecoilState(authState);
+  if (!auth.permissions.includes("admin.hotReloadTest")) return <NotFound {...props} />;
   return (
     <DefaultLayout title={titleDefault} className={className}>
       <div>Test:</div>
@@ -20,22 +25,6 @@ const Loaded: HotReloadTest = () => {
       <TestForm />
       <TestComponent />
     </DefaultLayout>
-  );
-};
-
-const Loading: HotReloadTest = () => {
-  return (
-    <DefaultLayout title={titleDefault} className={className}>
-      <div>Loading...</div>
-    </DefaultLayout>
-  );
-};
-
-const HotReloadTest: HotReloadTest = (props) => {
-  return (
-    <React.Suspense fallback={<Loading {...props} />}>
-      <Loaded {...props} />
-    </React.Suspense>
   );
 };
 

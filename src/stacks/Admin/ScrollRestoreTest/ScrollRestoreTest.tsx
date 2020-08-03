@@ -1,12 +1,17 @@
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { useRecoilState } from "recoil/dist";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
+import { authState } from "../../../state";
+import NotFound from "../../NotFound";
 
 const titleDefault = "ScrollRestore Test";
 const className = "admin scrollrestoretest";
 
-const Loaded: ScrollRestoreTest = () => {
+const ScrollRestoreTest: ScrollRestoreTest = (props) => {
+  const [auth] = useRecoilState(authState);
+  if (!auth.permissions.includes("admin.scrollRestoreTest")) return <NotFound {...props} />;
   return (
     <DefaultLayout title={titleDefault} className={className}>
       <div>
@@ -81,22 +86,6 @@ const Loaded: ScrollRestoreTest = () => {
       <div>66</div>
       <Link to="/admin">Goto dashboard</Link>
     </DefaultLayout>
-  );
-};
-
-const Loading: ScrollRestoreTest = () => {
-  return (
-    <DefaultLayout title={titleDefault} className={className}>
-      <div>Loading...</div>
-    </DefaultLayout>
-  );
-};
-
-const ScrollRestoreTest: ScrollRestoreTest = (props) => {
-  return (
-    <React.Suspense fallback={<Loading {...props} />}>
-      <Loaded {...props} />
-    </React.Suspense>
   );
 };
 

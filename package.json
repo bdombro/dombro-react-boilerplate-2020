@@ -45,6 +45,7 @@
     "@types/yup": "^0.29.3",
     "formik": "^2.1.5",
     "lodash-es": "^4.17.15",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "npm:@hot-loader/react-dom@^16.13.0",
     "react-hot-loader": "^4.12.21",

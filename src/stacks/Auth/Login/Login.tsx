@@ -1,4 +1,5 @@
 import { Form, Formik } from "formik";
+import qs from "query-string";
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
@@ -6,29 +7,29 @@ import { useRecoilState } from "recoil/dist";
 import { BlankLayout } from "../../../layout/BlankLayout";
 import { TextField } from "../../../molecules/TextField";
 import { authState } from "../../../state";
+import { wait } from "../../../util/wait";
 import * as helpers from "./Login.helpers";
 
 const titleDefault = "Login";
 const className = "auth login";
 
-const Loaded: Login = (props) => {
-  const { history } = props;
+const Login: Login = (props) => {
+  const { history, location } = props;
   const [auth, setAuth] = useRecoilState(authState);
+  const from = `${qs.parse(location.search).from}`;
 
-  if (auth.username)
+  React.useEffect(() => {
+    if (auth.username) wait(3000).then(() => (from ? history.goBack() : history.push("/")));
+  }, [auth.username, from, history]);
+
+  if (auth.username) {
     return (
       <BlankLayout title={titleDefault} className={className}>
-        <h1>You're already logged in as {auth.username}.</h1>
-        <ul>
-          <li>
-            Click <Link to="/">here</Link> to go home.
-          </li>
-          <li>
-            Click <Link to="/auth/logout">here</Link> to logout.
-          </li>
-        </ul>
+        <h1>Success!</h1>
+        <div>You're logged in, sending you {from ? "back" : "home"}...</div>
       </BlankLayout>
     );
+  }
 
   return (
     <BlankLayout title={titleDefault} className={className}>
@@ -36,7 +37,7 @@ const Loaded: Login = (props) => {
       <Formik
         initialValues={helpers.initialValues}
         validationSchema={helpers.schema}
-        onSubmit={helpers.onSubmitFactory({ history, setAuth })}
+        onSubmit={helpers.onSubmitFactory({ history, auth, setAuth })}
       >
         {({ touched, errors }) => (
           <Form>
@@ -67,21 +68,13 @@ const Loaded: Login = (props) => {
   );
 };
 
-const Loading: Login = () => {
-  return (
-    <BlankLayout title={titleDefault} className={className}>
-      <div>Loading...</div>
-    </BlankLayout>
-  );
-};
-
-const Login: Login = (props) => {
-  return (
-    <React.Suspense fallback={<Loading {...props} />}>
-      <Loaded {...props} />
-    </React.Suspense>
-  );
-};
+// TODO: Apply redirect logic to register.
+// TODO: dynmaic import pages code splitting
+// TODO: Test 404
+// TODO: Recoil persist
+// TODO: Forgot password page
+// TODO: Test 404
+// TODO: Error boundaries
 
 export default Login;
 

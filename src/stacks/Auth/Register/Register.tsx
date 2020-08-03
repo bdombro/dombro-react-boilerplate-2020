@@ -12,7 +12,7 @@ import * as helpers from "./Register.helpers";
 const titleDefault = "Register";
 const className = "auth register";
 
-const Loaded: Register = (props) => {
+const Register: Register = (props) => {
   const { history } = props;
   const [auth, setAuth] = useRecoilState(authState);
 
@@ -73,22 +73,6 @@ const Loaded: Register = (props) => {
         Don't have an account?
       </Link>
     </BlankLayout>
-  );
-};
-
-const Loading: Register = () => {
-  return (
-    <BlankLayout title={titleDefault} className={className}>
-      <div>Loading...</div>
-    </BlankLayout>
-  );
-};
-
-const Register: Register = (props) => {
-  return (
-    <React.Suspense fallback={<Loading {...props} />}>
-      <Loaded {...props} />
-    </React.Suspense>
   );
 };
 

@@ -4,6 +4,7 @@ import { SetterOrUpdater } from "recoil/dist";
 import * as Yup from "yup";
 
 import { authStateValue } from "../../../state";
+import { isPasswordRegex } from "../../../util/isPassword";
 
 export const initialValues: FormValues = {
   firstName: "",
@@ -20,7 +21,7 @@ export const schema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required.")
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      isPasswordRegex,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character."
     ),
 });

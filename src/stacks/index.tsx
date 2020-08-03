@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Admin from "./Admin";
 import Auth from "./Auth";
 import Dashboard from "./Dashboard";
+import NotFound from "./NotFound";
 
 const Stacks: Stacks = () => {
   return (
@@ -15,7 +16,7 @@ const Stacks: Stacks = () => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/auth" component={Auth} />
         <Route path="/admin" component={Admin} />
-        <Route component={() => <div>Not found.</div>} />
+        <Route component={NotFound} />
       </Switch>
     </>
   );

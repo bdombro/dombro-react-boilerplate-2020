@@ -1,12 +1,17 @@
 import React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { useRecoilState } from "recoil/dist";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
+import { authState } from "../../../state";
+import NotFound from "../../NotFound";
 
 const titleDefault = "Dashboard";
 const className = "admin dashboard";
 
-const Loaded: Dashboard = () => {
+const Dashboard: Dashboard = (props) => {
+  const [auth] = useRecoilState(authState);
+  if (!auth.permissions.includes("admin.dashboard")) return <NotFound {...props} />;
   return (
     <DefaultLayout title={titleDefault} className={className}>
       <div>Welcome to the dashboard!</div>
@@ -19,22 +24,6 @@ const Loaded: Dashboard = () => {
         </li>
       </ul>
     </DefaultLayout>
-  );
-};
-
-const Loading: Dashboard = () => {
-  return (
-    <DefaultLayout className={className} title={titleDefault}>
-      <div>Loading...</div>
-    </DefaultLayout>
-  );
-};
-
-const Dashboard: Dashboard = (props) => {
-  return (
-    <React.Suspense fallback={<Loading {...props} />}>
-      <Loaded {...props} />
-    </React.Suspense>
   );
 };
 

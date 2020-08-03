@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import NotFound from "../NotFound";
 import Dashboard from "./Dashboard";
 
 const Stack: Stack = (props) => {
@@ -8,6 +9,7 @@ const Stack: Stack = (props) => {
   return (
     <Switch>
       <Route path={`${match.url}`} component={Dashboard} exact />
+      <Route component={NotFound} />
     </Switch>
   );
 };

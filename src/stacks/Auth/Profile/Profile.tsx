@@ -5,26 +5,26 @@ import { useRecoilState } from "recoil/dist";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 import { authState } from "../../../state";
 
-const titleDefault = "Dashboard";
-const className = "dashboard";
+const titleDefault = "Profile";
+const className = "profile";
 
-const Dashboard: Dashboard = (props) => {
+const Profile: Profile = (props) => {
   const { history, location } = props;
   const [auth] = useRecoilState(authState);
   if (!auth.username) history.push(`/auth/login?from=${location.pathname}`);
   return (
     <DefaultLayout title={titleDefault} className={className}>
-      <div>Welcome to the dashboard!</div>
+      <div>Welcome to your profile, {auth.username}!</div>
       <ul>
         <li>
-          <Link to="/admin">Goto Admin Dashboard</Link>
+          <Link to="/">Goto home</Link>
         </li>
       </ul>
     </DefaultLayout>
   );
 };
 
-export default Dashboard;
+export default Profile;
 
-export type DashboardProps = RouteComponentProps<{} /* for example id: string */>;
-export type Dashboard = React.FC<DashboardProps>;
+export type ProfileProps = RouteComponentProps<{} /* for example id: string */>;
+export type Profile = React.FC<ProfileProps>;
