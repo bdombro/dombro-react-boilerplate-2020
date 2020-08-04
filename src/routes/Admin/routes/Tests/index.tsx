@@ -15,7 +15,7 @@ import { meta as ScrollRestoreTestMeta } from "./routes/ScrollRestoreTest/meta";
 
 const Stack: Stack = (props) => {
   return (
-    <RouteAccessControl meta={meta} {...props}>
+    <RouteAccessControl meta={meta} routeProps={props}>
       <Switch>
         <Route path={IndexRouteMeta.path} component={IndexRoute} exact />
         <Route path={HotReloadTestMeta.path} component={HotReloadTest} />

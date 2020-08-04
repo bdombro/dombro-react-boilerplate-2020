@@ -9,13 +9,13 @@ import { meta as AuthLoginMeta } from "../../routes/Login/meta";
 import { RouteAccessControlComponent } from "./types";
 
 export const RouteAccessControl: RouteAccessControlComponent = (props) => {
-  const { meta, children, ...childProps } = props;
+  const { meta, children, routeProps } = props;
   const [auth] = useRecoilState(authState);
   const missingPermissions = difference(meta.permissions, auth.permissions);
   if (missingPermissions.length) {
     console.debug(`RouteAccessControl: Blocked by ${missingPermissions.join(",")}`);
-    if (meta.hidden) return <NotFound {...childProps} />;
-    return <Redirect push to={`${AuthLoginMeta.path}?from=${props.location.pathname}`} />;
+    if (meta.hidden) return <NotFound {...routeProps} />;
+    return <Redirect push to={`${AuthLoginMeta.path}?from=${routeProps.location.pathname}`} />;
   }
   return <>{children}</>;
 };

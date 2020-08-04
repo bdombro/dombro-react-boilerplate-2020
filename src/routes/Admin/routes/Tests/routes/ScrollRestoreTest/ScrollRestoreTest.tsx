@@ -8,7 +8,7 @@ import { DefaultComponent } from "./types";
 
 const ScrollRestoreTest: DefaultComponent = (props) => {
   return (
-    <DefaultLayout title={meta.titleDefault} meta={meta}>
+    <DefaultLayout title={meta.titleDefault} meta={meta} routeProps={props}>
       <div>
         Scroll to the bottom of this page, click the link, then hit the back button in your browser. The scroll position
         should be preserved.

@@ -11,7 +11,7 @@ import { meta as TestsMeta } from "./routes/Tests/meta";
 
 const Stack: Stack = (props) => {
   return (
-    <RouteAccessControl meta={meta} {...props}>
+    <RouteAccessControl meta={meta} routeProps={props}>
       <Switch>
         <Route path={IndexRouteMeta.path} component={IndexRoute} exact />
         <Route path={TestsMeta.path} component={Tests} />

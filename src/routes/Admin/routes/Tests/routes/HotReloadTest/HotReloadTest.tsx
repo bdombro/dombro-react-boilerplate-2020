@@ -8,7 +8,7 @@ import { DefaultComponent } from "./types";
 
 const HotReloadTest: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta}>
+    <DefaultLayout meta={meta} routeProps={props}>
       <div>Test:</div>
       <ol>
         <li>Add test to the input below</li>

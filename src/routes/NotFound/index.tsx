@@ -1,13 +1,13 @@
 import React from "react";
 
-import BlankLayoutLoading from "../../layout/BlankLayout/compounds/BlankLayoutLoading.tsx/BlankLayoutLoading";
+import { BlankLayout } from "../../layout/BlankLayout";
 import { meta } from "./meta";
 import { DefaultComponent } from "./types";
 
 const Loaded = React.lazy(() => import("./NotFound"));
 
 const Component: DefaultComponent = (props) => (
-  <React.Suspense fallback={() => <BlankLayoutLoading meta={meta} {...props} />}>
+  <React.Suspense fallback={() => <BlankLayout meta={meta} routeProps={props} />}>
     <Loaded {...props} />
   </React.Suspense>
 );

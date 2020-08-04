@@ -1,19 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil/dist";
 
-import { DefaultLayout } from "../../../../layout/DefaultLayout";
-import { authState } from "../../../../state";
+import { BlankLayout } from "../../../../layout/BlankLayout";
 import { meta as DashboardMeta } from "../../../Dashboard/meta";
 import { meta as LogoutMeta } from "../Logout/meta";
 import { meta } from "./meta";
 import { DefaultComponent } from "./types";
 
-const Profile: DefaultComponent = (props) => {
-  const [auth] = useRecoilState(authState);
+const ForgotPassword: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta} routeProps={props}>
-      <div>Welcome to your profile, {auth.username}!</div>
+    <BlankLayout meta={meta} routeProps={props}>
+      <div>Forgot password coming soon...</div>
       <ul>
         <li>
           <Link to={DashboardMeta.path}>Goto dashboard</Link>
@@ -22,8 +19,8 @@ const Profile: DefaultComponent = (props) => {
           <Link to={LogoutMeta.path}>Logout</Link>
         </li>
       </ul>
-    </DefaultLayout>
+    </BlankLayout>
   );
 };
 
-export default Profile;
+export default ForgotPassword;

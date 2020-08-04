@@ -25,7 +25,7 @@ const Login: DefaultComponent = (props) => {
 
   if (auth.username) {
     return (
-      <BlankLayout meta={meta}>
+      <BlankLayout meta={meta} routeProps={props}>
         <h1>Success!</h1>
         <div>You're logged in, sending you {from ? "back" : "home"}...</div>
       </BlankLayout>
@@ -33,7 +33,7 @@ const Login: DefaultComponent = (props) => {
   }
 
   return (
-    <BlankLayout meta={meta}>
+    <BlankLayout meta={meta} routeProps={props}>
       <h1>{meta.titleDefault}</h1>
       <Formik
         initialValues={helpers.initialValues}
@@ -70,9 +70,7 @@ const Login: DefaultComponent = (props) => {
   );
 };
 
-// TODO: Make routes have a parent attribute, so that we can do breadcrumbs
 // TODO: Implement registration
-// TODO: Test 404
 // TODO: Recoil persist
 // TODO: Forgot password page
 // TODO: Error boundaries

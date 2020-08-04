@@ -8,9 +8,9 @@ import { meta as ProfileMeta } from "../../../Auth/routes/Profile/meta";
 import { meta } from "./meta";
 import { DefaultComponent } from "./types";
 
-const IndexRoute: DefaultComponent = () => {
+const IndexRoute: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta}>
+    <DefaultLayout meta={meta} routeProps={props}>
       <div>Welcome to the dashboard!</div>
       <ul>
         <HocAccessControl permissions={AdminMeta.permissions}>

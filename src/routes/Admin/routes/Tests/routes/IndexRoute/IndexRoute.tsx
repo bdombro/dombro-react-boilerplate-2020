@@ -10,7 +10,7 @@ import { DefaultComponent } from "./types";
 
 const IndexRoute: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta}>
+    <DefaultLayout meta={meta} routeProps={props}>
       <div>Welcome to the dashboard!</div>
       <ul>
         <li>

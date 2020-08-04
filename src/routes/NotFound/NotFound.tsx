@@ -12,7 +12,7 @@ const NotFound: DefaultComponent = (props) => {
   const [auth, setAuth] = useRecoilState(authState);
   const logout = (_: React.MouseEvent<HTMLElement>) => setAuth(authDefaultValue);
   return (
-    <BlankLayout meta={meta}>
+    <BlankLayout meta={meta} routeProps={props}>
       <h1>404: Not Found</h1>
       <div>The page you request is either non-existant or you don't have access.</div>
       <div>
