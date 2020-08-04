@@ -1,16 +1,19 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
 
+import { RouteMeta } from "../../routes/types";
 import { useScrollRestore } from "../useScrollRestore";
-import { Header } from "./Header";
+import { Breadcrumbs } from "./compounds/Breadcrumbs";
+import { Header } from "./compounds/Header";
 
 export const DefaultLayout: DefaultLayout = (props) => {
-  const { className, children, title } = props;
-  useMetaTags({ title: `${title} - Boilerplate` }, []);
+  const { children, meta, title } = props;
+  useMetaTags({ title: `${title ?? meta.titleDefault} - Boilerplate` }, []);
   useScrollRestore();
   return (
-    <div className={`layout-default ${className}`}>
+    <div className={`layout-default ${meta.slug}`}>
       <Header />
+      <Breadcrumbs meta={meta} />
       <div id="scroll-div">
         {!!title && <h1>{title}</h1>}
         {children}
@@ -20,8 +23,8 @@ export const DefaultLayout: DefaultLayout = (props) => {
 };
 
 export type DefaultLayoutProps = {
-  className: string;
-  title: string;
+  meta: RouteMeta;
+  title?: string;
   children: React.ReactNode;
 };
 export type DefaultLayout = React.FC<DefaultLayoutProps>;

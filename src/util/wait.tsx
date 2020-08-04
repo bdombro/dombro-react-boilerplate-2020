@@ -13,7 +13,8 @@ export const wait = (ms: number) => {
   });
 };
 
-export const waitFor: waitFor = async (callback, { interval = 100, timeout = 10000, maxTries }) => {
+export const waitFor: waitFor = async (callback, options) => {
+  const { interval = 100, timeout = 10000, maxTries } = options;
   const callbackPromise = async () => callback(); // promisify callback
   let tries = 0;
   const before = Date.now();

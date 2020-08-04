@@ -4,7 +4,7 @@ import useMetaTags from "react-metatags-hook";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil/dist";
 
-import Stacks from "./stacks";
+import Stacks from "./routes";
 
 function App() {
   useMetaTags(
