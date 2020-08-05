@@ -5,6 +5,7 @@ import DynamicRouteTestMeta from "../DynamicRouteTest/meta";
 import ErrorBoundaryTest1Meta from "../ErrorBoundaryTest1/meta";
 import ErrorBoundaryTest2Meta from "../ErrorBoundaryTest2/meta";
 import HotReloadTestMeta from "../HotReloadTest/meta";
+import PortalTestMeta from "../PortalTest/meta";
 import ScrollRestoreTestMeta from "../ScrollRestoreTest/meta";
 import { DefaultComponent } from "./types";
 
@@ -24,6 +25,9 @@ const Component: DefaultComponent = (props) => {
         </li>
         <li>
           <Link to={HotReloadTestMeta.path}>Goto HotReloadTest</Link>
+        </li>
+        <li>
+          <Link to={PortalTestMeta.path}>Goto Portal Test</Link>
         </li>
         <li>
           <Link to={ScrollRestoreTestMeta.path}>Goto ScrollRestoreTest</Link>

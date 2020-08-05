@@ -14,6 +14,8 @@ import HotReloadTest from "./routes/HotReloadTest";
 import HotReloadTestMeta from "./routes/HotReloadTest/meta";
 import IndexRoute from "./routes/IndexRoute";
 import IndexRouteMeta from "./routes/IndexRoute/meta";
+import PortalTest from "./routes/PortalTest";
+import PortalTestMeta from "./routes/PortalTest/meta";
 import ScrollRestoreTest from "./routes/ScrollRestoreTest";
 import ScrollRestoreTestMeta from "./routes/ScrollRestoreTest/meta";
 
@@ -26,6 +28,7 @@ const Stack: Stack = (props) => {
         <Route path={ErrorBoundaryTest2Meta.path} component={ErrorBoundaryTest2} />
         <Route path={HotReloadTestMeta.path} component={HotReloadTest} />
         <Route path={DynamicRouteTestMeta.path} component={DynamicRouteTest} />
+        <Route path={PortalTestMeta.path} component={PortalTest} exact />
         <Route path={ScrollRestoreTestMeta.path} component={ScrollRestoreTest} />
         <Route component={NotFound} />
       </Switch>

@@ -1,5 +1,5 @@
 import React from "react";
-import { PortalWithState } from "react-portal";
+import usePortal from "react-useportal/dist/usePortal";
 
 export class ErrorBoundary extends React.Component<{ showBack?: boolean }> {
   state: {
@@ -26,31 +26,38 @@ export class ErrorBoundary extends React.Component<{ showBack?: boolean }> {
   render() {
     const { showBack, children } = this.props;
     const { error } = this.state;
-    const stackHtml = error?.stack.replace(/\\n/g, "<br />");
     if (error) {
-      return (
-        <PortalWithState closeOnOutsideClick closeOnEsc node={document && document.getElementById("portalRoot")}>
-          {({ openPortal, closePortal, isOpen, portal }) => (
-            <div>
-              <p>Uh oh, something went wrong. {showBack && <a href="/">Go home?</a>}</p>
-              <p>
-                <button onClick={openPortal}>Click for More Info</button>
-              </p>
-              {portal(
-                <div style={{ background: "#aaa", padding: 20 }}>
-                  <button onClick={closePortal} style={{ float: "right" }}>
-                    Close (X)
-                  </button>
-                  <p>Message: {error?.message}</p>
-                  <p>Stack: </p>
-                  <pre dangerouslySetInnerHTML={{ __html: stackHtml }} />
-                </div>
-              )}
-            </div>
-          )}
-        </PortalWithState>
-      );
+      return <ErrorMessageWithPortal error={error} showBack={showBack} />;
     }
     return children;
   }
 }
+
+const ErrorMessageWithPortal = ({ error, showBack }: { error: any; showBack?: boolean }) => {
+  const stackHtml = error?.stack.replace(/\\n/g, "<br />");
+  const [openPortal, closePortal, isOpen, Portal] = usePortal({
+    bindTo: document.getElementById("portalRoot") || undefined,
+    closeOnOutsideClick: true,
+    closeOnEsc: true,
+  });
+  return (
+    <div>
+      <p>Uh oh, something went wrong. {showBack && <a href="/">Go home?</a>}</p>
+      <p>
+        <button onClick={openPortal}>Click for More Info</button>
+      </p>
+      {isOpen && (
+        <Portal>
+          <div style={{ background: "#aaa", padding: 20 }}>
+            <button onClick={closePortal} style={{ float: "right" }}>
+              Close (X)
+            </button>
+            <p>Message: {error?.message}</p>
+            <p>Stack: </p>
+            <pre dangerouslySetInnerHTML={{ __html: stackHtml }} />
+          </div>
+        </Portal>
+      )}
+    </div>
+  );
+};
