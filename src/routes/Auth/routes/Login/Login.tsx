@@ -69,6 +69,7 @@ const Component: DefaultComponent = (props) => {
   );
 };
 
+// TODO: Make ErrorBoundary have modal for error info
 // TODO: Implement registration
 // TODO: Recoil persist
 // TODO: Forgot password page

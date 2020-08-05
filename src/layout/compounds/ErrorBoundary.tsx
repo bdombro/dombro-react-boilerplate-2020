@@ -1,18 +1,16 @@
 import React from "react";
+import { PortalWithState } from "react-portal";
 
 export class ErrorBoundary extends React.Component<{ showBack?: boolean }> {
   state: {
     error: any;
-    show: boolean;
   };
 
   constructor(props: any) {
     super(props);
     this.state = {
       error: null,
-      show: false,
     };
-    this.toggleShow = this.toggleShow.bind(this);
   }
 
   static getDerivedStateFromError(error: any) {
@@ -25,33 +23,32 @@ export class ErrorBoundary extends React.Component<{ showBack?: boolean }> {
     this.setState({ error });
   }
 
-  toggleShow(e: React.MouseEvent<HTMLAnchorElement>) {
-    e.preventDefault();
-    const { show } = this.state;
-    this.setState({ ...this.state, show: !show });
-  }
-
   render() {
     const { showBack, children } = this.props;
-    const { error, show } = this.state;
+    const { error } = this.state;
     const stackHtml = error?.stack.replace(/\\n/g, "<br />");
     if (error) {
       return (
-        <div>
-          <p>Uh oh, something went wrong. {showBack && <a href="/">Go home?</a>}</p>
-          <p>
-            <a href="toggleShow" onClick={this.toggleShow}>
-              Click for More Info
-            </a>
-          </p>
-          {show && (
+        <PortalWithState closeOnOutsideClick closeOnEsc node={document && document.getElementById("portalRoot")}>
+          {({ openPortal, closePortal, isOpen, portal }) => (
             <div>
-              <p>Message: {error?.message}</p>
-              <p>Stack: </p>
-              <pre dangerouslySetInnerHTML={{ __html: stackHtml }} />
+              <p>Uh oh, something went wrong. {showBack && <a href="/">Go home?</a>}</p>
+              <p>
+                <button onClick={openPortal}>Click for More Info</button>
+              </p>
+              {portal(
+                <div style={{ background: "#aaa", padding: 20 }}>
+                  <button onClick={closePortal} style={{ float: "right" }}>
+                    Close (X)
+                  </button>
+                  <p>Message: {error?.message}</p>
+                  <p>Stack: </p>
+                  <pre dangerouslySetInnerHTML={{ __html: stackHtml }} />
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </PortalWithState>
       );
     }
     return children;

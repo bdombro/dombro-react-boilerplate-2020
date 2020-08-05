@@ -4,6 +4,7 @@ import useMetaTags from "react-metatags-hook";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil/dist";
 
+import PortalRoot from "./atoms/PortalRoot";
 import Stacks from "./routes";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
+        <PortalRoot />
         <Stacks />
       </BrowserRouter>
     </RecoilRoot>

@@ -13,8 +13,8 @@ const NotFound: DefaultComponent = (props) => {
   return (
     <>
       <h1>404: Not Found</h1>
-      <div>The page you request is either non-existant or you don't have access.</div>
       <div>
+        The page you request is either non-existant or you don't have access.{" "}
         <Link to={`${loginMeta.path}?from=${location.pathname}`} onClick={logout}>
           {auth.username ? "Switch user?" : "Login?"}
         </Link>
