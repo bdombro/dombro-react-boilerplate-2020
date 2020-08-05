@@ -9,7 +9,7 @@ import PortalTestMeta from "../PortalTest/meta";
 import ScrollRestoreTestMeta from "../ScrollRestoreTest/meta";
 import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
+const Component: DefaultComponent = () => {
   return (
     <>
       <div>Welcome to the dashboard!</div>

@@ -1,6 +1,7 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
 
+import { ErrorBoundary } from "../compounds/ErrorBoundary";
 import { useScrollRestore } from "../useScrollRestore";
 import Breadcrumbs from "./compounds/Breadcrumbs";
 import Header from "./compounds/Header";
@@ -14,7 +15,9 @@ export const Component: DefaultComponent = (props) => {
     <div className={`layout-default ${routeMeta.slug}`}>
       <Header routeMeta={routeMeta} />
       <Breadcrumbs routeMeta={routeMeta} />
-      <div id="scroll-div">{children}</div>
+      <div id="scroll-div">
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </div>
     </div>
   );
 };
