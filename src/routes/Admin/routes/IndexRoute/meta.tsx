@@ -1,7 +1,7 @@
 import { RouteMeta } from "../../../types";
-import { meta as parentMeta } from "../../meta";
+import parentMeta from "../../meta";
 
-export const meta: RouteMeta = {
+const routeMeta: RouteMeta = {
   titleDefault: "Admin IndexRoute",
   slug: "adminIndexRoute",
   path: parentMeta.path,
@@ -9,3 +9,4 @@ export const meta: RouteMeta = {
   hidden: true,
   parent: parentMeta.parent,
 };
+export default routeMeta;

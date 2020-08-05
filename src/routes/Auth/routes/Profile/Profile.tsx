@@ -2,18 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
-import { DefaultLayout } from "../../../../layout/DefaultLayout";
 import { authState } from "../../../../state";
-import { meta as DashboardMeta } from "../../../Dashboard/meta";
-import { meta as LogoutMeta } from "../Logout/meta";
-import { meta } from "./meta";
+import DashboardMeta from "../../../Dashboard/meta";
+import LogoutMeta from "../Logout/meta";
 import { DefaultComponent } from "./types";
 
-const Profile: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   const [auth] = useRecoilState(authState);
+  const [error, setError] = React.useState();
+  if (error) throw error;
   return (
-    <DefaultLayout meta={meta} routeProps={props}>
+    <>
       <div>Welcome to your profile, {auth.username}!</div>
+      <a
+        href="error"
+        onClick={(e) => {
+          e.preventDefault();
+          try {
+            throw new Error("AhhH!");
+          } catch (err) {
+            setError(err);
+          }
+        }}
+      >
+        Error
+      </a>
       <ul>
         <li>
           <Link to={DashboardMeta.path}>Goto dashboard</Link>
@@ -22,8 +35,8 @@ const Profile: DefaultComponent = (props) => {
           <Link to={LogoutMeta.path}>Logout</Link>
         </li>
       </ul>
-    </DefaultLayout>
+    </>
   );
 };
 
-export default Profile;
+export default Component;

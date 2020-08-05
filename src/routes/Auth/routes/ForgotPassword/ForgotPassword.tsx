@@ -1,15 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { BlankLayout } from "../../../../layout/BlankLayout";
-import { meta as DashboardMeta } from "../../../Dashboard/meta";
-import { meta as LogoutMeta } from "../Logout/meta";
-import { meta } from "./meta";
+import DashboardMeta from "../../../Dashboard/meta";
+import LogoutMeta from "../Logout/meta";
 import { DefaultComponent } from "./types";
 
-const ForgotPassword: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   return (
-    <BlankLayout meta={meta} routeProps={props}>
+    <>
       <div>Forgot password coming soon...</div>
       <ul>
         <li>
@@ -19,8 +17,8 @@ const ForgotPassword: DefaultComponent = (props) => {
           <Link to={LogoutMeta.path}>Logout</Link>
         </li>
       </ul>
-    </BlankLayout>
+    </>
   );
 };
 
-export default ForgotPassword;
+export default Component;

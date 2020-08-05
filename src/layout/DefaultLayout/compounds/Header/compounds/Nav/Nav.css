@@ -1,18 +1,18 @@
-.header {
+.headerNav {
     padding-bottom: 15px;
 }
-.header ul {
+.headerNav ul {
     padding: 0;
 }
-.header li {
+.headerNav li {
     display: inline;
 }
-.header li:not(:last-of-type):after {
+.headerNav li:not(:last-of-type):after {
     content: " | ";
 }
-.header li a {
+.headerNav li a {
     color: blue;
 }
-.header li a.active {
+.headerNav li a.active {
     text-decoration: underline;
 }

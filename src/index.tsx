@@ -4,11 +4,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
+import { ErrorBoundary } from "./layout/compounds/ErrorBoundary";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary showBack>
+      <App />
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById("root")
 );

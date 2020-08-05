@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { DefaultLayout } from "../../../../../../layout/DefaultLayout";
-import { meta as DynamicRouteTestMeta } from "../DynamicRouteTest/meta";
-import { meta as HotReloadTestMeta } from "../HotReloadTest/meta";
-import { meta as ScrollRestoreTestMeta } from "../ScrollRestoreTest/meta";
-import { meta } from "./meta";
+import DynamicRouteTestMeta from "../DynamicRouteTest/meta";
+import HotReloadTestMeta from "../HotReloadTest/meta";
+import ScrollRestoreTestMeta from "../ScrollRestoreTest/meta";
 import { DefaultComponent } from "./types";
 
-const IndexRoute: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta} routeProps={props}>
+    <>
       <div>Welcome to the dashboard!</div>
       <ul>
         <li>
@@ -23,8 +21,8 @@ const IndexRoute: DefaultComponent = (props) => {
           <Link to={DynamicRouteTestMeta.path}>Goto Dynamic Route Test</Link>
         </li>
       </ul>
-    </DefaultLayout>
+    </>
   );
 };
 
-export default IndexRoute;
+export default Component;

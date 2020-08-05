@@ -1,10 +1,11 @@
 import { RouteMeta } from "../../../../../types";
-import { meta as ParentMeta } from "../../meta";
+import ParentMeta from "../../meta";
 
-export const meta: RouteMeta = {
+const routeMeta: RouteMeta = {
   titleDefault: "Dynamic Route Test Root",
   slug: "dynamicRouteRoot",
   path: `${ParentMeta.path}/dynamic-route-test`,
   permissions: [],
   hidden: false,
 };
+export default routeMeta;

@@ -1,9 +1,10 @@
 import { RouteMeta } from "../types";
 
-export const meta: RouteMeta = {
+const routeMeta: RouteMeta = {
   titleDefault: "Admin Root",
   slug: "admin",
   path: "/admin",
   permissions: ["admin.dashboard"],
   hidden: true,
 };
+export default routeMeta;

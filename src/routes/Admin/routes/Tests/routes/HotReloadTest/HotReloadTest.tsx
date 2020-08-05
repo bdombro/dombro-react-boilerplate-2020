@@ -1,14 +1,12 @@
 import React from "react";
 
-import { DefaultLayout } from "../../../../../../layout/DefaultLayout";
 import { TestComponent } from "./compounds/TestComponent";
 import { TestForm } from "./compounds/TestForm";
-import { meta } from "./meta";
 import { DefaultComponent } from "./types";
 
-const HotReloadTest: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta} routeProps={props}>
+    <>
       <div>Test:</div>
       <ol>
         <li>Add test to the input below</li>
@@ -17,8 +15,8 @@ const HotReloadTest: DefaultComponent = (props) => {
       </ol>
       <TestForm />
       <TestComponent />
-    </DefaultLayout>
+    </>
   );
 };
 
-export default HotReloadTest;
+export default Component;

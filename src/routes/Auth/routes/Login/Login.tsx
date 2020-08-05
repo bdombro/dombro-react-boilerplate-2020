@@ -4,15 +4,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
-import { BlankLayout } from "../../../../layout/BlankLayout";
-import { TextField } from "../../../../molecules/TextField";
+import TextField from "../../../../molecules/TextField";
 import { authState } from "../../../../state";
 import { wait } from "../../../../util/wait";
 import * as helpers from "./helpers";
-import { meta } from "./meta";
+import routeMeta from "./meta";
 import { DefaultComponent } from "./types";
 
-const Login: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   const { history, location } = props;
   const [auth, setAuth] = useRecoilState(authState);
   // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/login
@@ -25,16 +24,16 @@ const Login: DefaultComponent = (props) => {
 
   if (auth.username) {
     return (
-      <BlankLayout meta={meta} routeProps={props}>
+      <>
         <h1>Success!</h1>
         <div>You're logged in, sending you {from ? "back" : "home"}...</div>
-      </BlankLayout>
+      </>
     );
   }
 
   return (
-    <BlankLayout meta={meta} routeProps={props}>
-      <h1>{meta.titleDefault}</h1>
+    <>
+      <h1>{routeMeta.titleDefault}</h1>
       <Formik
         initialValues={helpers.initialValues}
         validationSchema={helpers.schema}
@@ -66,13 +65,13 @@ const Login: DefaultComponent = (props) => {
       <Link replace to="/auth/register">
         Already have an account?
       </Link>
-    </BlankLayout>
+    </>
   );
 };
 
 // TODO: Implement registration
 // TODO: Recoil persist
 // TODO: Forgot password page
-// TODO: Error boundaries
+// TODO: Drop yap b/c it's too big
 
-export default Login;
+export default Component;

@@ -1,10 +1,11 @@
 import "./TextField.css";
 
 import { Field } from "formik";
-import { FieldAttributes } from "formik/dist/Field";
 import React from "react";
 
-export const TextField: TextField = (props) => {
+import { DefaultComponent } from "./types";
+
+export const Component: DefaultComponent = (props) => {
   const { name, labelText, touched, error, ...inputProps } = props;
   return (
     <div className={`textField ${touched && error && "hasError"}`}>
@@ -14,11 +15,4 @@ export const TextField: TextField = (props) => {
     </div>
   );
 };
-
-export type TextFieldProps = FieldAttributes<{
-  name: string;
-  labelText: string;
-  touched: boolean | undefined;
-  error: string | undefined;
-}>;
-export type TextField = React.FC<TextFieldProps>;
+export default Component;

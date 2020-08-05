@@ -1,22 +1,24 @@
 import React from "react";
+import useMetaTags from "react-metatags-hook";
 import { Link } from "react-router-dom";
 
-import { DefaultLayout } from "../../../../../../../../layout/DefaultLayout";
 import NotFound from "../../../../../../../NotFound/NotFound";
-import { meta as ParentMeta } from "../../meta";
-import { meta } from "./meta";
+import ParentMeta from "../../meta";
+import routeMeta from "./meta";
 import { DefaultComponent } from "./types";
 
-const DynamicRouteTestIdRoute: DefaultComponent = (props) => {
-  const { match } = props;
-  if (match.params.id === "2") return <NotFound {...props} />;
+const Component: DefaultComponent = (props) => {
+  const id = props.match.params.id;
+  useMetaTags({ title: `${routeMeta.titleDefault} #${id} - Boilerplate` }, []);
+  if (id === "2") return <NotFound {...props} />;
   return (
-    <DefaultLayout title={`Dynamic Route #${match.params.id}`} meta={meta} routeProps={props}>
+    <>
+      <h1>Dynamic Route #${id}</h1>
       <div>
         Welcome to a Dynamic Route! <Link to={ParentMeta.path}>Go back</Link>
       </div>
-    </DefaultLayout>
+    </>
   );
 };
 
-export default DynamicRouteTestIdRoute;
+export default Component;

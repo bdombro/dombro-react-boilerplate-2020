@@ -1,1 +1,16 @@
-export { TextField } from "./TextField";
+import React from "react";
+
+import { ErrorBoundary } from "../../layout/compounds/ErrorBoundary";
+import Loading from "./Loading";
+import { DefaultComponent } from "./types";
+
+const DefaultInner = React.lazy(() => import("./TextField"));
+
+const Default: DefaultComponent = (props) => (
+  <ErrorBoundary>
+    <React.Suspense fallback={Loading}>
+      <DefaultInner {...(props as any)} />
+    </React.Suspense>
+  </ErrorBoundary>
+);
+export default Default;

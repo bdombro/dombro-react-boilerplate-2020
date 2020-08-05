@@ -1,16 +1,16 @@
-.textField input {
+.checkboxField input {
     display: block;
 }
-.textField.hasError input {
+.checkboxField.hasError input {
     border: 1px solid red;
 }
-.textField label {
+.checkboxField label {
     display: block;
 }
-.textField .error {
+.checkboxField .error {
     display: none;
     color: red;
 }
-.textField.hasError .error {
+.checkboxField.hasError .error {
     display: block;
 }

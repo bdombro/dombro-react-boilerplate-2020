@@ -1,14 +1,20 @@
 import React from "react";
 
-import { BlankLayout } from "../../layout/BlankLayout";
-import { meta } from "./meta";
+import BlankLayout from "../../layout/BlankLayout";
+import RouteAccessControl from "../Auth/compounds/RouteAccessControl";
+import Loading from "./Loading";
+import routeMeta from "./meta";
 import { DefaultComponent } from "./types";
 
 const Loaded = React.lazy(() => import("./NotFound"));
 
 const Component: DefaultComponent = (props) => (
-  <React.Suspense fallback={() => <BlankLayout meta={meta} routeProps={props} />}>
-    <Loaded {...props} />
-  </React.Suspense>
+  <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
+    <BlankLayout routeMeta={routeMeta}>
+      <React.Suspense fallback={Loading}>
+        <Loaded {...props} />
+      </React.Suspense>
+    </BlankLayout>
+  </RouteAccessControl>
 );
 export default Component;

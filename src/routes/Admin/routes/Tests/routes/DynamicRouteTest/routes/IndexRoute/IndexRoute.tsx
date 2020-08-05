@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { DefaultLayout } from "../../../../../../../../layout/DefaultLayout";
-import { meta as IdRouteMeta } from "../[id]/meta";
-import { meta } from "./meta";
+import IdRouteMeta from "../[id]/meta";
 import { DefaultComponent } from "./types";
 
 const IndexRoute: DefaultComponent = (props) => {
   return (
-    <DefaultLayout meta={meta} routeProps={props}>
+    <>
       <div>Welcome to Dynamic Route Test!</div>
       <ul>
         <li>
@@ -18,7 +16,7 @@ const IndexRoute: DefaultComponent = (props) => {
           <Link to={`${IdRouteMeta.path.replace(":id", "")}2`}>Goto Entry 2 (hidden)</Link>
         </li>
       </ul>
-    </DefaultLayout>
+    </>
   );
 };
 

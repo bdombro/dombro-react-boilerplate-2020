@@ -1,7 +1,7 @@
 import { RouteMeta } from "../../../../../types";
-import { meta as parentMeta } from "../../meta";
+import parentMeta from "../../meta";
 
-export const meta: RouteMeta = {
+const routeMeta: RouteMeta = {
   titleDefault: "Scroll Restore Test",
   slug: "scrollRestoreTest",
   path: `${parentMeta.path}/hot-reload-test`,
@@ -9,3 +9,4 @@ export const meta: RouteMeta = {
   hidden: true,
   parent: parentMeta,
 };
+export default routeMeta;

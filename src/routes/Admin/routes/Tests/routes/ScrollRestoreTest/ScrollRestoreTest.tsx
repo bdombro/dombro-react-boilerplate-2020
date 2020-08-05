@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { DefaultLayout } from "../../../../../../layout/DefaultLayout";
-import { meta as AdminMeta } from "../../meta";
-import { meta } from "./meta";
+import AdminMeta from "../../meta";
 import { DefaultComponent } from "./types";
 
-const ScrollRestoreTest: DefaultComponent = (props) => {
+const Component: DefaultComponent = (props) => {
   return (
-    <DefaultLayout title={meta.titleDefault} meta={meta} routeProps={props}>
+    <>
       <div>
         Scroll to the bottom of this page, click the link, then hit the back button in your browser. The scroll position
         should be preserved.
@@ -80,8 +78,8 @@ const ScrollRestoreTest: DefaultComponent = (props) => {
       <div>65</div>
       <div>66</div>
       <Link to={AdminMeta.path}>Goto dashboard</Link>
-    </DefaultLayout>
+    </>
   );
 };
 
-export default ScrollRestoreTest;
+export default Component;

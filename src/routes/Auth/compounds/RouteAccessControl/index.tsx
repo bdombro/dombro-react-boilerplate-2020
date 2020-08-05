@@ -1,1 +1,1 @@
-export * from "./RouteAccessControlComponent";
+export { default } from "./RouteAccessControl";
