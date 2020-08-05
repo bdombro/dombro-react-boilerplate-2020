@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
-import { authDefaultValue, authState } from "../../state";
+import { authDefaultValue, AuthState } from "../../state";
 import loginMeta from "../Auth/routes/Login/meta";
 import { DefaultComponent } from "./types";
 
 const NotFound: DefaultComponent = (props) => {
   const { location } = props;
-  const [auth, setAuth] = useRecoilState(authState);
+  const [auth, setAuth] = useRecoilState(AuthState);
   const logout = (_: React.MouseEvent<HTMLElement>) => setAuth(authDefaultValue);
   return (
     <>

@@ -10,7 +10,7 @@ export const authDefaultValue: authStateValue = {
   permissions: [],
 };
 
-export const authState = atom<authStateValue>({
-  key: "authState",
+export const AuthState = atom<authStateValue>({
+  key: "AuthState",
   default: authDefaultValue,
 });

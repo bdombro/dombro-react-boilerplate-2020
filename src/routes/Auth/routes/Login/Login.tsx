@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
 import TextField from "../../../../molecules/TextField";
-import { authState } from "../../../../state";
+import { AuthState } from "../../../../state";
 import { wait } from "../../../../util/wait";
 import * as helpers from "./helpers";
 import routeMeta from "./meta";
@@ -13,7 +13,7 @@ import { DefaultComponent } from "./types";
 
 const Component: DefaultComponent = (props) => {
   const { history, location } = props;
-  const [auth, setAuth] = useRecoilState(authState);
+  const [auth, setAuth] = useRecoilState(AuthState);
   // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/login
   const from = `${qs.parse(location.search).from}`.replace("undefined", "");
   console.debug(from);
@@ -70,7 +70,6 @@ const Component: DefaultComponent = (props) => {
 };
 
 // TODO: Implement registration
-// TODO: Recoil persist
 // TODO: Forgot password page
 // TODO: Drop yap b/c it's too big
 

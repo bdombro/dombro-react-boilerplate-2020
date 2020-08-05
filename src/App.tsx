@@ -5,34 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil/dist";
 
 import PortalRoot from "./atoms/PortalRoot";
+import PersistenceObserver, { initializeState } from "./compounds/PersistanceObserver";
 import Stacks from "./routes";
+import siteMeta from "./siteMeta";
 
 function App() {
-  useMetaTags(
-    {
-      title: "Boilerplate",
-      description: "A complete boilerplate for react without styles, ready to be customized.",
-      metas: [
-        { name: "keywords", content: "a, list, of, keywords" },
-        { name: "robots", content: "index, follow" },
-        { name: "DC.Title", content: "Boilerplate" },
-        { name: "url", content: window.location.href },
-      ],
-      links: [{ rel: "canonical", href: window.location.href }],
-      openGraph: {
-        title: "Boilerplate",
-        image: "http://yourwebsite.com/ogimage.jpg",
-      },
-      twitter: {
-        card: "summary",
-        creator: "@you",
-        title: "Boilerplate",
-      },
-    },
-    []
-  );
+  useMetaTags(siteMeta, []);
   return (
-    <RecoilRoot>
+    <RecoilRoot initializeState={initializeState}>
+      <PersistenceObserver />
       <BrowserRouter>
         <PortalRoot />
         <Stacks />
