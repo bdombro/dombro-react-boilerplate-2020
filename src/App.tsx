@@ -1,5 +1,4 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 import useMetaTags from "react-metatags-hook";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil/dist";
@@ -25,4 +24,4 @@ function App() {
   );
 }
 
-export default hot(module)(App);
+export default App;
