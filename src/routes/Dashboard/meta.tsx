@@ -1,7 +1,7 @@
 import { RouteMeta } from "../types";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "Dashboard Root",
+  titleDefault: "Dashboard",
   slug: "dashboard",
   path: "/dashboard",
   permissions: [],

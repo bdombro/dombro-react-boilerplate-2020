@@ -1,8 +1,8 @@
 import { RouteMeta } from "../types";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "Admin Root",
-  slug: "admin",
+  titleDefault: "Admin Dashboard",
+  slug: "adminDashboard",
   path: "/admin",
   permissions: ["admin.dashboard"],
   hidden: true,

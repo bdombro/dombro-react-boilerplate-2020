@@ -13,7 +13,6 @@ import ErrorBoundaryTest2Meta from "./routes/ErrorBoundaryTest2/meta";
 import HotReloadTest from "./routes/HotReloadTest";
 import HotReloadTestMeta from "./routes/HotReloadTest/meta";
 import IndexRoute from "./routes/IndexRoute";
-import IndexRouteMeta from "./routes/IndexRoute/meta";
 import PortalTest from "./routes/PortalTest";
 import PortalTestMeta from "./routes/PortalTest/meta";
 import ScrollRestoreTest from "./routes/ScrollRestoreTest";
@@ -23,7 +22,7 @@ const Stack: Stack = (props) => {
   return (
     <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
       <Switch>
-        <Route path={IndexRouteMeta.path} component={IndexRoute} exact />
+        <Route path={routeMeta.path} component={IndexRoute} exact />
         <Route path={ErrorBoundaryTestMeta.path} component={ErrorBoundaryTest} />
         <Route path={ErrorBoundaryTest2Meta.path} component={ErrorBoundaryTest2} />
         <Route path={HotReloadTestMeta.path} component={HotReloadTest} />

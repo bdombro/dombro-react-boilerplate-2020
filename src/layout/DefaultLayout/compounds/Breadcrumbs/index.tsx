@@ -6,7 +6,7 @@ import { ErrorBoundary } from "../../../compounds/ErrorBoundary";
 import Loading from "./Loading";
 import { DefaultComponent } from "./types";
 
-const DefaultInner = React.lazy(() => import("./style"));
+const DefaultInner = React.lazy(() => import("./Breadcrumbs"));
 
 const Default: DefaultComponent = (props) => {
   const { routeMeta } = props;
