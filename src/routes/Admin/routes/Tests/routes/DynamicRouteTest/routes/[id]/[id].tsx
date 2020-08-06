@@ -2,7 +2,7 @@ import React from "react";
 import useMetaTags from "react-metatags-hook";
 import { Link } from "react-router-dom";
 
-import NotFound from "../../../../../../../NotFound/NotFound";
+import NotFound from "../../../../../../../NotFound";
 import ParentMeta from "../../meta";
 import routeMeta from "./meta";
 import { DefaultComponent } from "./types";

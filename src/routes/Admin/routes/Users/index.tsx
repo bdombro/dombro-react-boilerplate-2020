@@ -1,23 +1,20 @@
 import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import RouteAccessControl from "../Auth/compounds/RouteAccessControl";
-import NotFound from "../NotFound";
+import RouteAccessControl from "../../../Auth/compounds/RouteAccessControl";
+import NotFound from "../../../NotFound";
 import routeMeta from "./meta";
+import IdRoute from "./routes/[id]";
+import IdRouteMeta from "./routes/[id]/meta";
 import IndexRoute from "./routes/IndexRoute";
 import IndexRouteMeta from "./routes/IndexRoute/meta";
-import Tests from "./routes/Tests";
-import TestsMeta from "./routes/Tests/meta";
-import Users from "./routes/Users";
-import UsersMeta from "./routes/Users/meta";
 
 const Stack: Stack = (props) => {
   return (
     <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
       <Switch>
         <Route path={IndexRouteMeta.path} component={IndexRoute} exact />
-        <Route path={UsersMeta.path} component={Users} />
-        <Route path={TestsMeta.path} component={Tests} />
+        <Route path={IdRouteMeta.path} component={IdRoute} />
         <Route component={NotFound} />
       </Switch>
     </RouteAccessControl>

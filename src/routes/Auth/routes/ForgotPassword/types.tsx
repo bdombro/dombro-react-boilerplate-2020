@@ -13,5 +13,4 @@ export type OnSubmit = (values: FormValues, formikHelpers: FormikHelpers<FormVal
 export type OnSubmitFactoryProps = {
   setSuccess: (values: boolean) => void;
 };
-// TODO: Consier lodash instead of a factory like this
 export type OnSubmitFactory = (props: OnSubmitFactoryProps) => OnSubmit;

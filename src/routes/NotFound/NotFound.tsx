@@ -1,4 +1,5 @@
 import React from "react";
+import useMetaTags from "react-metatags-hook";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
@@ -10,6 +11,7 @@ const NotFound: DefaultComponent = (props) => {
   const { location } = props;
   const [auth, setAuth] = useRecoilState(AuthState);
   const logout = (_: React.MouseEvent<HTMLElement>) => setAuth(authDefaultValue);
+  useMetaTags({ title: `404 Note Found - Boilerplate` }, []);
   return (
     <>
       <h1>404: Not Found</h1>

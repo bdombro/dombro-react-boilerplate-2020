@@ -23,5 +23,4 @@ export type OnSubmitFactoryProps = {
   auth: AuthStateType;
   setAuth: SetterOrUpdater<AuthStateType>;
 };
-// TODO: Consier lodash instead of a factory like this
 export type OnSubmitFactory = (props: OnSubmitFactoryProps) => OnSubmit;

@@ -16,7 +16,6 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = (props) => {
   const { history, location } = props;
   const [auth, setAuth] = useRecoilState(AuthState);
-  // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/login
   const from = `${qs.parse(location.search).from}`.replace("undefined", "");
 
   React.useEffect(() => {
@@ -70,9 +69,5 @@ const Component: DefaultComponent = (props) => {
     </>
   );
 };
-
-// TODO: Implement forgot password
-// TODO: Forgot password page
-// TODO: Drop yap b/c it's too big
 
 export default Component;

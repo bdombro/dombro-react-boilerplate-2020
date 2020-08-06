@@ -3,9 +3,11 @@ import { atom } from "recoil";
 import { AuthStateType } from "./types";
 
 export const authDefaultValue: AuthStateType = {
+  email: "",
   username: "",
   token: "",
-  displayName: "",
+  givenName: "",
+  surname: "",
   avatar: "",
   permissions: [],
 };
