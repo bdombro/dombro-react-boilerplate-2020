@@ -1,4 +1,4 @@
-export type authStateValue = {
+export type AuthStateType = {
   username: string;
   token: string;
   displayName: string;

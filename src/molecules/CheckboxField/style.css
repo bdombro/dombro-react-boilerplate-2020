@@ -1,11 +1,8 @@
-.checkboxField input {
+.checkboxField {
     display: block;
 }
 .checkboxField.hasError input {
     border: 1px solid red;
-}
-.checkboxField label {
-    display: block;
 }
 .checkboxField .error {
     display: none;

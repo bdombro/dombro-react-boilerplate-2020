@@ -11,7 +11,7 @@ const Loaded = React.lazy(() => import("./ScrollRestoreTest"));
 const Component: DefaultComponent = (props) => (
   <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
     <DefaultLayout routeMeta={routeMeta}>
-      <React.Suspense fallback={Loading}>
+      <React.Suspense fallback={<Loading {...props} />}>
         <Loaded {...props} />
       </React.Suspense>
     </DefaultLayout>

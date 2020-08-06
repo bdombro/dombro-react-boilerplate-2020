@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-import { authStateValue } from "./types";
+import { AuthStateType } from "./types";
 
-export const authDefaultValue: authStateValue = {
+export const authDefaultValue: AuthStateType = {
   username: "",
   token: "",
   displayName: "",
@@ -10,7 +10,7 @@ export const authDefaultValue: authStateValue = {
   permissions: [],
 };
 
-export const AuthState = atom<authStateValue>({
+export const AuthState = atom<AuthStateType>({
   key: "AuthState",
   default: authDefaultValue,
 });

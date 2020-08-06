@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React from "react";
 
 import { ErrorBoundary } from "../../layout/compounds/ErrorBoundary";
@@ -8,7 +10,7 @@ const DefaultInner = React.lazy(() => import("./CheckboxField"));
 
 const Default: DefaultComponent = (props) => (
   <ErrorBoundary>
-    <React.Suspense fallback={Loading}>
+    <React.Suspense fallback={<Loading {...props} />}>
       <DefaultInner {...(props as any)} />
     </React.Suspense>
   </ErrorBoundary>

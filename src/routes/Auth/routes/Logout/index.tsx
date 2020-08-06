@@ -11,7 +11,7 @@ const Loaded = React.lazy(() => import("./Logout"));
 const Component: DefaultComponent = (props) => (
   <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
     <BlankLayout routeMeta={routeMeta}>
-      <React.Suspense fallback={Loading}>
+      <React.Suspense fallback={<Loading {...props} />}>
         <Loaded {...props} />
       </React.Suspense>
     </BlankLayout>

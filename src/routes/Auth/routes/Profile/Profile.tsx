@@ -11,7 +11,7 @@ const Component: DefaultComponent = (props) => {
   const [auth] = useRecoilState(AuthState);
   return (
     <>
-      <div>Welcome to your profile, {auth.username}!</div>
+      <h1>Welcome to your profile, {auth.username}!</h1>
       <ul>
         <li>
           <Link to={DashboardMeta.path}>Goto dashboard</Link>

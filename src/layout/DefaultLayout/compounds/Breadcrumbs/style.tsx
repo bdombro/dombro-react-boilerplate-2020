@@ -1,5 +1,3 @@
-import "./Breadcrumbs.css";
-
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -14,7 +12,7 @@ const Component: DefaultComponent = (props) => {
       <span>Breadcrumbs: </span>
       <ul>
         {metas.map((m) => (
-          <li>
+          <li key={m.titleDefault}>
             <Link to={m.path}>{m.titleDefault}</Link>
           </li>
         ))}

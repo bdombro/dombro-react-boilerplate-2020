@@ -3,14 +3,18 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
 import { ErrorBoundary } from "./layout/compounds/ErrorBoundary";
+import LoadingLayout from "./layout/LoadingLayout";
 import * as serviceWorker from "./serviceWorker";
+
+const App = React.lazy(() => import("./App"));
 
 ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary showBack>
-      <App />
+      <React.Suspense fallback={<LoadingLayout percentLoaded={1} />}>
+        <App />
+      </React.Suspense>
     </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById("root")

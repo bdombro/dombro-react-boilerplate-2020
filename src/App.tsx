@@ -6,8 +6,9 @@ import { RecoilRoot } from "recoil/dist";
 
 import PortalRoot from "./atoms/PortalRoot";
 import PersistenceObserver, { initializeState } from "./compounds/PersistanceObserver";
-import Stacks from "./routes";
+import LoadingLayout from "./layout/LoadingLayout";
 import siteMeta from "./siteMeta";
+const Stacks = React.lazy(() => import("./routes"));
 
 function App() {
   useMetaTags(siteMeta, []);
@@ -15,8 +16,10 @@ function App() {
     <RecoilRoot initializeState={initializeState}>
       <PersistenceObserver />
       <BrowserRouter>
-        <PortalRoot />
-        <Stacks />
+        <React.Suspense fallback={<LoadingLayout percentLoaded={33} />}>
+          <PortalRoot />
+          <Stacks />
+        </React.Suspense>
       </BrowserRouter>
     </RecoilRoot>
   );

@@ -1,5 +1,3 @@
-import "./style.css";
-
 import { Field } from "formik";
 import React from "react";
 

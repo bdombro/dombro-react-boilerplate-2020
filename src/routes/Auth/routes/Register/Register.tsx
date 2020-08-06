@@ -4,11 +4,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
+import CheckboxField from "../../../../molecules/CheckboxField";
 import TextField from "../../../../molecules/TextField";
 import { AuthState } from "../../../../state";
 import { wait } from "../../../../util/wait";
-import forgotMeta from "../ForgotPassword/meta";
-import registerMeta from "../Register/meta";
+import loginMeta from "../Login/meta";
 import * as helpers from "./helpers";
 import routeMeta from "./meta";
 import { DefaultComponent } from "./types";
@@ -16,7 +16,7 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = (props) => {
   const { history, location } = props;
   const [auth, setAuth] = useRecoilState(AuthState);
-  // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/login
+  // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/register (same as login)
   const from = `${qs.parse(location.search).from}`.replace("undefined", "");
 
   React.useEffect(() => {
@@ -42,11 +42,12 @@ const Component: DefaultComponent = (props) => {
       >
         {({ touched, errors }) => (
           <Form>
+            <TextField name="firstName" labelText="First Name" touched={touched.firstName} error={errors.firstName} />
+            <TextField name="lastName" labelText="Last Name" touched={touched.lastName} error={errors.lastName} />
             <TextField
               name="email"
               labelText="Email"
               type="email"
-              autoFocus
               placeholder="john@acme.com"
               touched={touched.email}
               error={errors.email}
@@ -59,20 +60,21 @@ const Component: DefaultComponent = (props) => {
               touched={touched.password}
               error={errors.password}
             />
+            <CheckboxField
+              name="terms"
+              labelText="Do you agree to these terms?"
+              touched={touched.terms}
+              error={errors.terms}
+            />
             <button type="submit">Submit</button>
           </Form>
         )}
       </Formik>
-      <Link replace to={`${registerMeta.path}?${location.search}`}>
-        Need an account?
+      <Link replace to={`${loginMeta.path}?${location.search}`}>
+        Already have an account?
       </Link>
-      <Link to={forgotMeta.path}>Forgot your password?</Link>
     </>
   );
 };
-
-// TODO: Implement forgot password
-// TODO: Forgot password page
-// TODO: Drop yap b/c it's too big
 
 export default Component;

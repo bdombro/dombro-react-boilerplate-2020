@@ -1,8 +1,8 @@
 .headerNav {
-    padding-bottom: 15px;
 }
 .headerNav ul {
     padding: 0;
+    margin: 0;
 }
 .headerNav li {
     display: inline;

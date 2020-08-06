@@ -9,7 +9,7 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = () => {
   return (
     <>
-      <div>Welcome to the dashboard!</div>
+      <h1>Welcome to the dashboard!</h1>
       <ul>
         <HocAccessControl permissions={AdminMeta.permissions}>
           <li>
