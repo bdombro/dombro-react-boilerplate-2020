@@ -1,7 +1,7 @@
 import { RouteMeta } from "../types";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "404 - Not Found",
+  title: "404 - Not Found",
   slug: "notFound",
   path: "/not-found",
   permissions: [],

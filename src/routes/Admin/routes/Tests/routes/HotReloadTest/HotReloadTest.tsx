@@ -7,7 +7,7 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = (props) => {
   return (
     <>
-      <div>Test:</div>
+      <div>Test: (currently fails)</div>
       <ol>
         <li>Add test to the input below</li>
         <li>Change the text in the source file of TestComponent.tsx</li>

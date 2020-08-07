@@ -12,9 +12,7 @@ const Component: DefaultComponent = (props) => {
       <span>Breadcrumbs: </span>
       <ul>
         {metas.map((m, i) => (
-          <li key={m.titleDefault}>
-            {i === metas.length - 1 ? m.titleDefault : <Link to={m.path}>{m.titleDefault}</Link>}
-          </li>
+          <li key={m.title}>{i === metas.length - 1 ? m.title : <Link to={m.path}>{m.title}</Link>}</li>
         ))}
       </ul>
     </div>

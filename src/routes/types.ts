@@ -1,5 +1,5 @@
 export type RouteMeta = {
-  titleDefault: string;
+  title: string;
   slug: string;
   path: string;
   permissions: string[];

@@ -11,7 +11,7 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = (props) => {
   const id = parseInt(props.match.params.id, 10);
   const user = testUsers?.[id];
-  useMetaTags({ title: `${routeMeta.titleDefault} ${user?.givenName} ${user?.surname} - Boilerplate` }, []);
+  useMetaTags({ title: `${routeMeta.title} ${user?.givenName} ${user?.surname} - Boilerplate` }, []);
   if (!user) return <NotFound {...props} />;
   return (
     <>

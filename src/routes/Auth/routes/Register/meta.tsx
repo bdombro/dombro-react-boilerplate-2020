@@ -2,7 +2,7 @@ import { RouteMeta } from "../../../types";
 import parentMeta from "../../meta";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "Register",
+  title: "Register",
   slug: "authRegister",
   path: `${parentMeta.path}/register`,
   permissions: [],

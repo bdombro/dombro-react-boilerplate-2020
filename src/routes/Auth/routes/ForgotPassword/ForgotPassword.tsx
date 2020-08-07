@@ -33,7 +33,7 @@ const Component: DefaultComponent = (props) => {
 
   return (
     <>
-      <h1>{routeMeta.titleDefault}</h1>
+      <h1>{routeMeta.title}</h1>
       <Formik
         initialValues={helpers.initialValues}
         validationSchema={helpers.schema}

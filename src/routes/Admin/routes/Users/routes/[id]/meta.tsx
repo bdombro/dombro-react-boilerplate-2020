@@ -2,7 +2,7 @@ import { RouteMeta } from "../../../../../types";
 import parentMeta from "../../meta";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "User",
+  title: "User Profile",
   slug: "adminUser",
   path: `${parentMeta.path}/:id`,
   permissions: ["active.dashboard"],

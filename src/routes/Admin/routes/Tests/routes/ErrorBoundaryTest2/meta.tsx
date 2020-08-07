@@ -2,7 +2,7 @@ import { RouteMeta } from "../../../../../types";
 import parentMeta from "../../meta";
 
 const routeMeta: RouteMeta = {
-  titleDefault: "Error Boundary Test 2",
+  title: "Error Boundary Test 2",
   slug: "errorBoundaryTest2",
   path: `${parentMeta.path}/error-boundary-test-2`,
   permissions: [],

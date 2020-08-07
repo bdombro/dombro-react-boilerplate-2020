@@ -9,7 +9,7 @@ import { DefaultComponent } from "./types";
 
 const Component: DefaultComponent = (props) => {
   const id = props.match.params.id;
-  useMetaTags({ title: `${routeMeta.titleDefault} #${id} - Boilerplate` }, []);
+  useMetaTags({ title: `${routeMeta.title} #${id} - Boilerplate` }, []);
   if (id === "2") return <NotFound {...props} />;
   return (
     <>
