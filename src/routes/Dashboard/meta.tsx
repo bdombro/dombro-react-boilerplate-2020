@@ -4,7 +4,6 @@ const routeMeta: RouteMeta = {
   title: "Dashboard",
   slug: "dashboard",
   path: "/dashboard",
-  permissions: [],
-  hidden: false,
+  permissions: ["active.dashboard"],
 };
 export default routeMeta;

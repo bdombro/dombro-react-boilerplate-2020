@@ -4,7 +4,5 @@ const routeMeta: RouteMeta = {
   title: "404 - Not Found",
   slug: "notFound",
   path: "/not-found",
-  permissions: [],
-  hidden: false,
 };
 export default routeMeta;

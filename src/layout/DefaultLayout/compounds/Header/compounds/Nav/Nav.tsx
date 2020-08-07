@@ -16,7 +16,7 @@ export const Component: DefaultComponent = () => {
             Dashboard
           </NavLink>
         </li>
-        <HocAccessControl permissions={AdminMeta.permissions}>
+        <HocAccessControl permissions={AdminMeta.permissions} hidden={true}>
           <li>
             <NavLink to={AdminMeta.path} activeClassName="active">
               Admin

@@ -9,12 +9,16 @@ import LoginMeta from "../../routes/Login/meta";
 import { DefaultComponent } from "./types";
 
 const Component: DefaultComponent = (props) => {
-  const { routeMeta, children, routeProps } = props;
+  const {
+    routeMeta: { permissions = [], hidden = false },
+    children,
+    routeProps,
+  } = props;
   const [auth] = useRecoilState(AuthState);
-  const missingPermissions = difference(routeMeta.permissions, auth.permissions);
+  const missingPermissions = difference(permissions, auth.permissions);
   if (missingPermissions.length) {
     console.debug(`RouteAccessControl: Blocked by ${missingPermissions.join(",")}`);
-    if (routeMeta.hidden) return <NotFound {...routeProps} />;
+    if (hidden || auth.username) return <NotFound {...routeProps} />;
     return <Redirect push to={`${LoginMeta.path}?from=${routeProps.location.pathname}`} />;
   }
   return <>{children}</>;

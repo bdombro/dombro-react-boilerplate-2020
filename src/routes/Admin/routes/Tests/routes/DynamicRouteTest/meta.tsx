@@ -5,7 +5,5 @@ const routeMeta: RouteMeta = {
   title: "Dynamic Route Tests",
   slug: "dynamicRouteTests",
   path: `${ParentMeta.path}/dynamic-route-tests`,
-  permissions: [],
-  hidden: false,
 };
 export default routeMeta;

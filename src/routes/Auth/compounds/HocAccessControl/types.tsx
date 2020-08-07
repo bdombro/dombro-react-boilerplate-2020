@@ -1,7 +1,7 @@
 import React from "react";
 
 export type ComponentAccessControlProps = {
-  permissions: string[];
+  permissions?: string[];
   hidden?: boolean;
   children: React.ReactNode;
 };

@@ -6,7 +6,6 @@ const routeMeta: RouteMeta = {
   slug: "scrollRestoreTest",
   path: `${parentMeta.path}/hot-reload-test`,
   permissions: ["admin.dashboard"],
-  hidden: true,
   parent: parentMeta,
 };
 export default routeMeta;

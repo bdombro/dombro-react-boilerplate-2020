@@ -6,7 +6,7 @@ import { AuthState } from "../../../../state/authState";
 import { ComponentAccessControlComponent } from "./types";
 
 export const HocAccessControl: ComponentAccessControlComponent = (props) => {
-  const { permissions, children, hidden = true } = props;
+  const { permissions = [], hidden = false, children } = props;
   const [auth] = useRecoilState(AuthState);
   const missingPermissions = difference(permissions, auth.permissions);
   if (missingPermissions.length) {
