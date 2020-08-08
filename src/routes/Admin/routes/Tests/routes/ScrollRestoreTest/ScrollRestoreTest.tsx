@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AdminMeta from "../../meta";
 import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
+const Component: DefaultComponent = () => {
   return (
     <>
       <div>

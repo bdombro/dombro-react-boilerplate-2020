@@ -8,12 +8,10 @@ import { DefaultComponent } from "./types";
 const Component: DefaultComponent = (props) => {
   const { routeMeta, children } = props;
   useMetaTags({ title: `${routeMeta.title} - Boilerplate` }, []);
-  useScrollRestore();
+  useScrollRestore("scroll-div");
   return (
-    <div className={`layout-blank ${routeMeta.slug}`}>
-      <div id="scroll-div">
-        <ErrorBoundary>{children}</ErrorBoundary>
-      </div>
+    <div className={`layout-blank ${routeMeta.slug}`} id="scroll-div" style={{ height: "100vh", overflowY: "scroll" }}>
+      <ErrorBoundary>{children}</ErrorBoundary>
     </div>
   );
 };
