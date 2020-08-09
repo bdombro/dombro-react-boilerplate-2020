@@ -10,7 +10,7 @@ import { DefaultComponent } from "./types";
 export const Component: DefaultComponent = (props) => {
   const { children = "", routeMeta } = props;
   useMetaTags({ title: `${routeMeta.title} - Boilerplate` }, []);
-  useScrollRestore("scroll-div");
+  useScrollRestore("#scroll-div");
   return (
     <div
       className={`layout-default ${routeMeta.slug}`}

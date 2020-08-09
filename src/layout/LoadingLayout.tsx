@@ -35,5 +35,5 @@ const Dot = ({ blinking }: { blinking?: boolean }) => {
   return <span style={{ margin: 4, color: "#aaa", opacity }}>.</span>;
 };
 
-export type DefaultProps = { style?: ElementCSSInlineStyle; percentLoaded?: number };
+export type DefaultProps = { style?: React.CSSProperties; percentLoaded?: number };
 export type DefaultComponent = React.FC<DefaultProps>;

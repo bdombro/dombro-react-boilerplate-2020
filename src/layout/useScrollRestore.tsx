@@ -1,65 +1,57 @@
 /**
  * Intelligent, low-sideeffect way to restore scroll position
+ * @param elementSelector: A document.querySelector to the scroll element.
+ * *Note* The scroll element MUST have a fixed height (i.e. 100vh)
  */
-import { openDB } from "idb";
 import React from "react";
 
-const scrollPositionTableName = "scrollPosition";
-const scrollRestoreDbPromise = openDB("scrollRestore", 1.0, {
-  upgrade(db) {
-    db.createObjectStore(scrollPositionTableName);
-  },
+import { waitFor } from "../util/wait";
+
+let windowLoaded = false;
+window.addEventListener("load", () => {
+  windowLoaded = true;
 });
 
-const scrollRestoreDb = {
-  async get(key: string): Promise<number> {
-    return (await scrollRestoreDbPromise).get(scrollPositionTableName, key);
-  },
-  async set(key: string, val: number) {
-    return (await scrollRestoreDbPromise).put(scrollPositionTableName, val, key);
-  },
-  async delete(key: string) {
-    return (await scrollRestoreDbPromise).delete(scrollPositionTableName, key);
-  },
-  async clear() {
-    return (await scrollRestoreDbPromise).clear(scrollPositionTableName);
-  },
-  async keys() {
-    return (await scrollRestoreDbPromise).getAllKeys(scrollPositionTableName);
-  },
-};
-
-export function useScrollRestore(elementId: string) {
-  const restoreScroll = React.useCallback(() => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      scrollRestoreDb.get(resolveRowKey()).then((scrollLast) => {
-        element.scrollTop = scrollLast ?? 0;
-      });
-    }
-  }, [elementId]);
-  const saveScroll = React.useCallback(() => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      scrollRestoreDb.set(resolveRowKey(), element.scrollTop);
-    }
-  }, [elementId]);
+let init = false;
+export function useScrollRestore(elementSelector: string) {
+  const pop = React.useCallback(() => {
+    const element = document.querySelector(elementSelector);
+    if (!element) throw new Error("useScrollRestore.pop: Element not found");
+    const stackStr = sessionStorage.getItem("scrollStack");
+    if (!stackStr) return;
+    const stack = stackStr.split(",");
+    const next = parseInt(stack.pop()!, 10);
+    sessionStorage.setItem("scrollStack", stack.join(","));
+    element.scrollTop = next;
+  }, [elementSelector]);
+  const push = React.useCallback(() => {
+    const element = document.querySelector(elementSelector);
+    if (!element) throw new Error("useScrollRestore.push: Element not found");
+    const stackStr = sessionStorage.getItem("scrollStack");
+    const stack = stackStr ? stackStr.split(",") : [];
+    stack.push(`${element.scrollTop}`);
+    sessionStorage.setItem("scrollStack", stack.join(","));
+  }, [elementSelector]);
 
   React.useEffect(() => {
-    const scrollInterval = setInterval(saveScroll, 400);
-    window.addEventListener("popstate", restoreScroll);
+    const element = document.querySelector(elementSelector);
+    if (!element) throw new Error("useScrollRestore.push: Element not found");
+    if (!init) {
+      waitFor(() => windowLoaded, {}).then(pop);
+      init = true;
+    }
+    window.addEventListener("unload", push);
+    window.addEventListener("pushstate", push);
+    window.addEventListener("popstate", pop);
     return () => {
-      clearInterval(scrollInterval);
       // Add deley to popstate b/c race condition
       setTimeout(() => {
-        window.removeEventListener("popstate", restoreScroll);
-      }, 1000);
+        window.removeEventListener("unload", push);
+        window.removeEventListener("pushstate", push);
+        window.removeEventListener("popstate", pop);
+      }, 100);
     };
-  }, [restoreScroll, saveScroll]);
-}
-
-function resolveRowKey() {
-  return `scroll-${window.location.pathname}${window.location.hash && "#" + window.location.hash}`;
+  }, [elementSelector, pop, push]);
 }
 
 // export function scrollToTop() {
