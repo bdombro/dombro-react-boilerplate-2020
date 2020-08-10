@@ -1,10 +1,11 @@
 /**
- * Intelligent, low-sideeffect way to restore scroll position
+ * Intelligent, low side-effect way to restore scroll position
  * @param elementSelector: A document.querySelector to the scroll element. Selector over ref b/c ref is unreliable.
+ * The scroll element MUST have a fixed height (i.e. 100vh)
  *
- * - The scroll element MUST have a fixed height (i.e. 100vh)
+ * - Depends on a router that sets window.history.state.key (react-router, reach-router, etc.).
+ * - window.history.state.key is a unique history ID that is populated by popular routers (react-router, reach-router)
  * - This approach is imperfect, but "good-enough".
- * - window.history.state?.key is a unique history ID that is populated by popular routers (react-router, reach-router)
  */
 import React from "react";
 
@@ -19,25 +20,28 @@ export function useScrollRestore(elementSelector: string) {
       console.warn("useScrollRestore.recall: Element not found");
       return;
     }
-    const historyKey = window.history.state?.key;
-    if (!historyKey) {
-      console.warn("useScrollRestore.recall: History not initialized");
-      return;
-    }
+    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
       store.get<number>(historyKey).then((scrollTop) => {
         const next = scrollTop ?? 0;
-        const set = () => (element.scrollTop = next);
-        // Set it aggressively over 1 seconds to ensure it gets set after content loads.
-        for (let i = 0; i < 1000; i += 100) setTimeout(set, i);
+
+        // Sometimes the page may not be fully loaded. If so, retry setting scroll position
+        // many times until success.
+        let success = false;
+        const set = () => {
+          if (!success) {
+            element.scrollTop = next;
+            if (element.scrollTop === next) success = true;
+          }
+        };
+        for (let i = 0; i < 3000; i += 50) setTimeout(set, i);
       });
     });
   }, [elementSelector]);
   const save = React.useCallback(() => {
     const element = document.querySelector(elementSelector);
     if (!element) throw new Error("useScrollRestore.save: Element not found");
-    const historyKey = window.history.state?.key;
-    if (!historyKey) throw new Error("useScrollRestore.save: History not initialized");
+    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
       const scrollTopNow = element.scrollTop;
       // If 0, don't save and remove stale saves here to reduce memory footprint

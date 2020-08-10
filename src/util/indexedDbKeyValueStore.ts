@@ -1,5 +1,6 @@
 /**
- * Borrowed from https://github.com/elias551/simple-kvs
+ * Adapted from https://github.com/elias551/simple-kvs
+ * - Adds timestamp field and garbage collection feature.
  */
 const getIndexedDbObject = () =>
   customDbFactory ||
