@@ -7,86 +7,60 @@
  */
 import React from "react";
 
-import { wait, waitFor } from "../util/wait";
+import { getKeyValueStore } from "../util/indexedDbKeyValueStore";
 
-let windowLoaded = false;
-window.addEventListener("load", () => {
-  windowLoaded = true;
+const tabId = sessionStorage.scrollTabID || Math.round(Math.random() * 100000);
+sessionStorage.scrollTabID = tabId;
+const storeName = `useScrollRestore-${tabId}`;
+const storePromise = getKeyValueStore(storeName);
+storePromise.then((store) => {
+  // window.addEventListener("unload", store.clear);
+  // window.addEventListener("beforeunload", store.clear);
 });
 
-// restore scroll on first load
-let loaded = false;
-// naively track scrollTop with a .3s delay, so that we can store it
-// after a back/forward event
-let lastScrollTop = 0;
-
 export function useScrollRestore(elementSelector: string) {
-  const pop = React.useCallback(() => {
+  const recall = React.useCallback(() => {
     const element = document.querySelector(elementSelector);
     if (!element) throw new Error("useScrollRestore.pop: Element not found");
-    const stackStr = sessionStorage.getItem("scrollStack");
-    if (!stackStr) return; // this happens iff entry point to website
-    const stacks = JSON.parse(stackStr);
-    const urlHash = getUrlHash();
-    const isBackward = !!stacks.back.length && stacks.back[stacks.back.length - 1][0] === urlHash;
-    const isForward = !!stacks.forward.length && stacks.forward[stacks.forward.length - 1][0] === urlHash;
-    if (isBackward) {
-      const next = stacks.back.pop();
-      stacks.forward.push([lastUrlHash, lastScrollTop]);
-      sessionStorage.setItem("scrollStack", JSON.stringify(stacks));
-      element.scrollTop = next[1];
-    } else if (isForward) {
-      const next = stacks.forward.pop();
-      stacks.back.push([lastUrlHash, lastScrollTop]);
-      sessionStorage.setItem("scrollStack", JSON.stringify(stacks));
-      element.scrollTop = next[1];
-    } else {
-      // Unknown: best to reset.
-      sessionStorage.setItem("scrollStack", JSON.stringify({ back: [], forward: [] }));
-    }
-    lastUrlHash = urlHash;
+    storePromise.then((store) => {
+      store.getKeys().then((k) => {
+        console.dir(k);
+      });
+      store.get<number>(window.history.state.key).then((scrollTop) => {
+        if (scrollTop) {
+          const set = () => (element.scrollTop = scrollTop);
+          // Set it aggressively over 1 seconds to ensure it gets set after content loads.
+          for (let i = 0; i < 1000; i += 100) setTimeout(set, i);
+        }
+      });
+    });
   }, [elementSelector]);
-  const push = React.useCallback(() => {
+  const save = React.useCallback(() => {
     const element = document.querySelector(elementSelector);
     if (!element) throw new Error("useScrollRestore.push: Element not found");
-    const stackStr = sessionStorage.getItem("scrollStack");
-    const stacks = stackStr ? JSON.parse(stackStr) : { back: [], forward: [] };
-    stacks.back.push([lastUrlHash, element.scrollTop]);
-    stacks.forward = [];
-    sessionStorage.setItem("scrollStack", JSON.stringify(stacks));
-    lastUrlHash = getUrlHash();
+    storePromise.then((store) => {
+      store.set(window.history.state.key, element.scrollTop);
+    });
   }, [elementSelector]);
 
   React.useEffect(() => {
     const element = document.querySelector(elementSelector);
     if (!element) throw new Error("useScrollRestore.push: Element not found");
-    if (!loaded) {
-      waitFor(() => windowLoaded, {}).then(pop);
-      loaded = true;
-    }
-    const trackLastScrollTop = setInterval(async () => {
-      const scrollTop = element.scrollTop;
-      await wait(300);
-      lastScrollTop = scrollTop;
-    }, 300);
-    window.addEventListener("unload", push);
-    window.addEventListener("pushstate", push);
-    window.addEventListener("popstate", pop);
+    recall();
+    const savePoller = setInterval(save, 100);
+    window.addEventListener("unload", save);
+    window.addEventListener("pushstate", save);
+    window.addEventListener("popstate", recall);
     return () => {
       // Add deley to popstate b/c race condition
       setTimeout(() => {
-        clearInterval(trackLastScrollTop);
-        window.removeEventListener("unload", push);
-        window.removeEventListener("pushstate", push);
-        window.removeEventListener("popstate", pop);
+        clearInterval(savePoller);
+        window.removeEventListener("unload", save);
+        window.removeEventListener("pushstate", save);
+        window.removeEventListener("popstate", recall);
       }, 100);
     };
-  }, [elementSelector, pop, push]);
-}
-
-let lastUrlHash = getUrlHash();
-function getUrlHash() {
-  return `${window.location.pathname}${window.location.hash && "#" + window.location.hash}`;
+  }, [elementSelector, recall, save]);
 }
 
 // export function scrollToTop() {
