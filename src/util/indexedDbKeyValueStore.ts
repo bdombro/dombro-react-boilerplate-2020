@@ -14,7 +14,7 @@ export const setIndexedDb = (indexedDb: IDBFactory) => {
   customDbFactory = indexedDb;
 };
 
-const getKeyValueDb = (dbName: string) =>
+const getKeyValueDb = (dbName: string, tableName: string) =>
   new Promise<IDBDatabase>((resolve, reject) => {
     const indexedDB = getIndexedDbObject();
 
@@ -34,9 +34,11 @@ const getKeyValueDb = (dbName: string) =>
     };
 
     request.onupgradeneeded = function () {
-      const store = this.result.createObjectStore("kv-store", {
+      const store = this.result.createObjectStore(tableName, {
         keyPath: "k",
       });
+
+      store.createIndex("t", "t", { unique: false });
 
       store.transaction.oncomplete = function () {
         resolve(this.db);
@@ -54,13 +56,34 @@ export const removeKeyValueStore = (dbName: string) =>
 
 export const getKeyValueStore = async (
   dbName: string = "kv-store",
-  table: string = "kv-store"
+  tableName: string = "kv-store",
+  maxAge?: number
 ): Promise<KeyValueStore> => {
-  const db = await getKeyValueDb(dbName);
+  const db = await getKeyValueDb(dbName, tableName);
 
-  const getStore = (mode: "readonly" | "readwrite") => db.transaction(table, mode).objectStore(table);
+  const getStore = (mode: "readonly" | "readwrite") => db.transaction(tableName, mode).objectStore(tableName);
 
-  return {
+  const garbageCollect = () =>
+    new Promise((resolve, reject) => {
+      const request = getStore("readwrite")
+        .index("t")
+        .openCursor(IDBKeyRange.upperBound(Date.now() - maxAge!));
+
+      request.onsuccess = (event) => {
+        // @ts-ignore
+        const cursor = event.target!.result;
+        if (cursor) {
+          getStore("readwrite").delete(cursor.primaryKey);
+          cursor.continue();
+        } else {
+          resolve();
+        }
+      };
+      request.onerror = reject;
+    });
+  if (maxAge) setInterval(garbageCollect, 60000);
+
+  const store: KeyValueStore = {
     get: <T>(key: string) =>
       new Promise<T | undefined>((resolve, reject) => {
         const request = getStore("readonly").get(key);
@@ -75,12 +98,13 @@ export const getKeyValueStore = async (
         const request = getStore("readonly").getAllKeys();
         request.onerror = reject;
         request.onsuccess = function () {
-          resolve(this.result.map((v) => v.toString()));
+          const keys = this.result.map((v) => v.toString());
+          resolve(keys);
         };
       }),
     set: (key: string, value: any) =>
       new Promise<void>((resolve, reject) => {
-        const request = getStore("readwrite").put({ k: key, v: value });
+        const request = getStore("readwrite").put({ k: key, v: value, t: Date.now() });
         request.onsuccess = () => resolve();
         request.onerror = reject;
       }),
@@ -97,6 +121,7 @@ export const getKeyValueStore = async (
         request.onerror = reject;
       }),
   };
+  return store;
 };
 
 export interface KeyValueStore {
