@@ -15,4 +15,6 @@ export const isPasswordRegex = new RegExp(
   ].join("")}`
 );
 
+export const isPasswordRequirements = "minimum 8 letters, one uppercase, one lowercase, and one number.";
+
 export const isPassword = (subject: string) => isPasswordRegex.test(subject);

@@ -1,4 +1,3 @@
-import { FormikHelpers } from "formik";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -8,9 +7,3 @@ export type DefaultComponent = React.FC<DefaultProps>;
 export interface FormValues {
   email: string;
 }
-
-export type OnSubmit = (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => Promise<void>;
-export type OnSubmitFactoryProps = {
-  setSuccess: (values: boolean) => void;
-};
-export type OnSubmitFactory = (props: OnSubmitFactoryProps) => OnSubmit;

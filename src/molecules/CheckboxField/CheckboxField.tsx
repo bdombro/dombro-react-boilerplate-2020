@@ -1,20 +1,17 @@
-import { Field } from "formik";
 import React from "react";
 
 import { DefaultComponent } from "./types";
 
 export const Component: DefaultComponent = (props) => {
-  const { name, labelText, touched, type, error, ...inputProps } = props;
-  const checkboxElement = React.useRef<HTMLInputElement>();
+  const { name, labelText, type, error, inputRef, ...inputProps } = props;
+  const id = React.useMemo(() => `${Math.abs(Math.random() * 1000)}`, []);
   function toggleBox() {
-    // @ts-ignore: ignore unsure ref
-    if ("checked" in checkboxElement.current) {
-      checkboxElement.current.checked = !checkboxElement.current.checked;
-    }
+    const e = document.getElementById(id) as HTMLInputElement;
+    e.checked = !e.checked;
   }
   return (
-    <div className={`checkboxField ${touched && error && "hasError"}`}>
-      <Field type="checkbox" name={name} {...inputProps} innerRef={checkboxElement} />
+    <div className={`checkboxField ${error && "hasError"}`}>
+      <input type="checkbox" name={name} {...inputProps} ref={inputRef} id={id} />
       <label htmlFor={name} onClick={toggleBox}>
         {labelText}
       </label>
