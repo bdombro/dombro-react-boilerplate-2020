@@ -1,23 +1,23 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 
+import LoadingSkeleton from "../../../../molecules/LoadingSkeleton/LoadingSkeleton";
 import { DefaultComponent } from "./types";
 
-export const Loading: DefaultComponent = () => {
+export const Component: DefaultComponent = () => {
   return (
     <div>
       <h1>
-        <Skeleton width={300} />
+        <LoadingSkeleton width={300} height={40} />
       </h1>
       <ul>
         <li>
-          <Skeleton width={100} />
+          <LoadingSkeleton width={100} />
         </li>
         <li>
-          <Skeleton width={100} />
+          <LoadingSkeleton width={100} />
         </li>
       </ul>
     </div>
   );
 };
-export default Loading;
+export default Component;

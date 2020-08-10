@@ -1,11 +1,11 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 
+import LoadingSkeleton from "../../../../molecules/LoadingSkeleton/LoadingSkeleton";
 import { DefaultComponent } from "./types";
 
 const Component: DefaultComponent = () => (
   <div className="breadcrumbs">
-    <Skeleton width={300} />
+    <LoadingSkeleton width={300} />
   </div>
 );
 export default Component;

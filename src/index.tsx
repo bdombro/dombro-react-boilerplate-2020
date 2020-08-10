@@ -12,7 +12,7 @@ const App = React.lazy(() => import("./App"));
 ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary showBack>
-      <React.Suspense fallback={<LoadingLayout percentLoaded={1} />}>
+      <React.Suspense fallback={<LoadingLayout variant="outer" percentLoaded={1} />}>
         <App />
       </React.Suspense>
     </ErrorBoundary>

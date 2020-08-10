@@ -9,7 +9,7 @@ const DefaultInner = React.lazy(() => import("./BlankLayout"));
 const Default: DefaultComponent = (props) => {
   return (
     <ErrorBoundary>
-      <React.Suspense fallback={<LoadingLayout percentLoaded={66} />}>
+      <React.Suspense fallback={<LoadingLayout variant="outer" percentLoaded={66} />}>
         <DefaultInner {...props} />
       </React.Suspense>
     </ErrorBoundary>

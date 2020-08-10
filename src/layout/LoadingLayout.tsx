@@ -2,9 +2,17 @@ import React from "react";
 import { useInterval } from "react-use";
 
 const LoadingLayout: DefaultComponent = (props) => {
-  const { style, percentLoaded } = props;
+  const { variant, percentLoaded, style } = props;
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", ...style }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: variant === "outer" ? "100vh" : "50vh",
+        ...style,
+      }}
+    >
       <div>
         <img alt="loading" style={{ margin: "auto", paddingLeft: 1 }} src="/tail-spin.svg" />
         <div style={{ margin: "auto" }}>
@@ -35,5 +43,5 @@ const Dot = ({ blinking }: { blinking?: boolean }) => {
   return <span style={{ margin: 4, color: "#aaa", opacity }}>.</span>;
 };
 
-export type DefaultProps = { style?: React.CSSProperties; percentLoaded?: number };
+export type DefaultProps = { variant: "outer" | "inner"; percentLoaded?: number; style?: React.CSSProperties };
 export type DefaultComponent = React.FC<DefaultProps>;

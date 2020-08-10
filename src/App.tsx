@@ -15,7 +15,7 @@ function App() {
     <RecoilRoot initializeState={initializeState}>
       <PersistenceObserver />
       <BrowserRouter>
-        <React.Suspense fallback={<LoadingLayout percentLoaded={33} />}>
+        <React.Suspense fallback={<LoadingLayout variant="outer" percentLoaded={33} />}>
           <PortalRoot />
           <Stacks />
         </React.Suspense>

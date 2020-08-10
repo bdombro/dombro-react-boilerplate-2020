@@ -62,12 +62,12 @@ export function useScrollRestore(elementSelector: string) {
     const element = document.querySelector(elementSelector);
     if (!element) throw new Error("useScrollRestore.effect: Element not found");
     recall();
-    const savePoller = setInterval(save, 100);
+    const savePoller = setInterval(save, 400);
     window.addEventListener("unload", save);
     window.addEventListener("pushstate", save);
     window.addEventListener("popstate", recall);
     return () => {
-      // Add deley to popstate b/c race condition
+      // Add delay to popstate b/c race condition
       setTimeout(() => {
         clearInterval(savePoller);
         window.removeEventListener("unload", save);

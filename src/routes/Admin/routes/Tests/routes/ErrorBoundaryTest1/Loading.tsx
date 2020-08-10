@@ -1,6 +1,7 @@
 import React from "react";
 
+import LoadingLayout from "../../../../../../layout/LoadingLayout";
 import { DefaultComponent } from "./types";
 
-export const Loading: DefaultComponent = () => <></>;
-export default Loading;
+const Component: DefaultComponent = () => <LoadingLayout variant="inner" />;
+export default Component;
