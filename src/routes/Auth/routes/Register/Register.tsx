@@ -1,22 +1,29 @@
 import qs from "query-string";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
-import CheckboxField from "../../../../molecules/CheckboxField";
-import TextField from "../../../../molecules/TextField";
+import CheckboxFieldset from "../../../../molecules/CheckboxFieldset";
+import TextFieldset from "../../../../molecules/TextFieldset";
 import { AuthState } from "../../../../state";
 import { adminUserAuth, normalUserAuth } from "../../../../state/authState/testUsers";
 import { isPasswordRegex, isPasswordRequirements } from "../../../../util/isPassword";
 import { wait } from "../../../../util/wait";
 import loginMeta from "../Login/meta";
 import routeMeta from "./meta";
-import { DefaultComponent } from "./types";
-import { FormValues } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const { history, location } = props;
+export interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  terms: boolean;
+}
+
+const Component: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [auth, setAuth] = useRecoilState(AuthState);
   const { handleSubmit, register, errors } = useForm<FormValues>();
   // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/register (same as login)
@@ -33,8 +40,8 @@ const Component: DefaultComponent = (props) => {
   );
 
   React.useEffect(() => {
-    if (auth.username) wait(1000).then(() => (from ? history.goBack() : history.push("/")));
-  }, [auth.username, from, history]);
+    if (auth.username) wait(1000).then(() => (from ? navigate(-1) : navigate("/")));
+  }, [auth.username, from, navigate]);
 
   if (auth.username) {
     return (
@@ -49,21 +56,21 @@ const Component: DefaultComponent = (props) => {
     <>
       <h1>{routeMeta.title}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
+        <TextFieldset
           name="firstName"
           labelText="First Name"
           defaultValue="Jane"
           error={errors?.firstName?.message}
           inputRef={register({ required: "Required" })}
         />
-        <TextField
+        <TextFieldset
           name="lastName"
           labelText="Last Name"
           defaultValue="Smith"
           error={errors?.lastName?.message}
           inputRef={register({ required: "Required" })}
         />
-        <TextField
+        <TextFieldset
           name="email"
           labelText="Email"
           type="email"
@@ -79,7 +86,7 @@ const Component: DefaultComponent = (props) => {
             },
           })}
         />
-        <TextField
+        <TextFieldset
           name="password"
           labelText="Password"
           type="password"
@@ -94,7 +101,7 @@ const Component: DefaultComponent = (props) => {
             },
           })}
         />
-        <CheckboxField
+        <CheckboxFieldset
           name="terms"
           labelText="Do you agree to these terms?"
           error={errors?.terms?.message}

@@ -1,25 +1,26 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { PartialRouteObject } from "react-router";
+import { Navigate, useRoutes } from "react-router-dom";
 
 import Admin from "./Admin";
+import AdminMeta from "./Admin/meta";
 import Auth from "./Auth";
+import AuthMeta from "./Auth/meta";
 import Dashboard from "./Dashboard";
+import DashboardMeta from "./Dashboard/meta";
 import NotFound from "./NotFound";
 
-const Stacks: Stacks = () => {
-  return (
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/dashboard" />
-      </Route>
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/auth" component={Auth} />
-      <Route path="/admin" component={Admin} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+const Component: React.FC = () => {
+  const routes: PartialRouteObject[] = [
+    { path: "/", element: <Navigate to={DashboardMeta.slug} replace /> },
+    { path: DashboardMeta.slug + "/*", element: <Dashboard /> },
+    { path: AuthMeta.slug + "/*", element: <Auth /> },
+    { path: AdminMeta.slug + "/*", element: <Admin /> },
+    { path: "*", element: <NotFound /> },
+  ];
+  return useRoutes(routes);
 };
-export default Stacks;
+export default Component;
 
-export type StacksProps = {};
-export type Stacks = React.FC<StacksProps>;
+export type DefaultProps = {};
+export type DefaultComponent = React.FC<DefaultProps>;

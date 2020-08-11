@@ -1,28 +1,26 @@
 import React from "react";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { PartialRouteObject } from "react-router";
+import { useRoutes } from "react-router-dom";
 
 import RouteAccessControl from "../Auth/compounds/RouteAccessControl";
+import routeMeta from "../Auth/meta";
 import NotFound from "../NotFound";
-import routeMeta from "./meta";
 import IndexRoute from "./routes/IndexRoute";
 import Tests from "./routes/Tests";
 import TestsMeta from "./routes/Tests/meta";
 import Users from "./routes/Users";
 import UsersMeta from "./routes/Users/meta";
 
-const Stack: Stack = (props) => {
-  return (
-    <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
-      <Switch>
-        <Route path={routeMeta.path} component={IndexRoute} exact />
-        <Route path={UsersMeta.path} component={Users} />
-        <Route path={TestsMeta.path} component={Tests} />
-        <Route component={NotFound} />
-      </Switch>
-    </RouteAccessControl>
-  );
+const Component: React.FC = () => {
+  const routes: PartialRouteObject[] = [
+    { path: "/", element: <IndexRoute /> },
+    { path: UsersMeta.slug + "/*", element: <Users /> },
+    { path: TestsMeta.slug + "/*", element: <Tests /> },
+    { path: "*", element: <NotFound /> },
+  ];
+  return <RouteAccessControl routeMeta={routeMeta}>{useRoutes(routes)}</RouteAccessControl>;
 };
-export default Stack;
+export default Component;
 
-export type StackProps = RouteComponentProps<{}>;
-export type Stack = React.FC<StackProps>;
+export type DefaultProps = {};
+export type DefaultComponent = React.FC<DefaultProps>;

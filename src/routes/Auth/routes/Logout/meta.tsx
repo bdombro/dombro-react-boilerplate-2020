@@ -1,10 +1,11 @@
 import { RouteMeta } from "../../../types";
-import parentMeta from "../../meta";
+import ParentMeta from "../../meta";
 
+const slug = "logout";
 const routeMeta: RouteMeta = {
   title: "Logout",
-  slug: "authLogout",
-  path: `${parentMeta.path}/logout`,
-  parent: parentMeta,
+  slug,
+  path: `${ParentMeta.path}/${slug}`,
+  parent: ParentMeta,
 };
 export default routeMeta;

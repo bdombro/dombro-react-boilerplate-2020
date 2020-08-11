@@ -7,9 +7,8 @@ import ErrorBoundaryTest2Meta from "../ErrorBoundaryTest2/meta";
 import HotReloadTestMeta from "../HotReloadTest/meta";
 import PortalTestMeta from "../PortalTest/meta";
 import ScrollRestoreTestMeta from "../ScrollRestoreTest/meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = () => {
+const Component: React.FC = () => {
   return (
     <>
       <div>Welcome to the dashboard!</div>

@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil/dist";
+import { useRecoilValue } from "recoil/dist";
 
 import { AuthState } from "../../../../state";
 import DashboardMeta from "../../../Dashboard/meta";
 import LogoutMeta from "../Logout/meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const [auth] = useRecoilState(AuthState);
+const Component: React.FC = () => {
+  const auth = useRecoilValue(AuthState);
   return (
     <>
       <h1>Welcome to your profile, {auth.username}!</h1>

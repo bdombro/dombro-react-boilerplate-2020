@@ -1,10 +1,11 @@
 import { RouteMeta } from "../../../types";
-import parentMeta from "../../meta";
+import ParentMeta from "../../meta";
 
+const slug = "users";
 const routeMeta: RouteMeta = {
   title: "Users",
-  slug: "adminUsers",
-  path: `${parentMeta.path}/users`,
-  parent: parentMeta,
+  slug,
+  path: `${ParentMeta.path}/${slug}`,
+  parent: ParentMeta,
 };
 export default routeMeta;

@@ -1,11 +1,12 @@
 import { RouteMeta } from "../../../types";
-import parentMeta from "../../meta";
+import ParentMeta from "../../meta";
 
+const slug = "profile";
 const routeMeta: RouteMeta = {
   title: "Profile",
-  slug: "authProfile",
-  path: `${parentMeta.path}/profile`,
+  slug,
+  path: `${ParentMeta.path}/${slug}`,
   permissions: ["active.dashboard"],
-  parent: parentMeta,
+  parent: ParentMeta,
 };
 export default routeMeta;

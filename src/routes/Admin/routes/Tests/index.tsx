@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { PartialRouteObject } from "react-router";
+import { useRoutes } from "react-router-dom";
 
 import RouteAccessControl from "../../../Auth/compounds/RouteAccessControl";
 import NotFound from "../../../NotFound";
@@ -18,23 +19,20 @@ import PortalTestMeta from "./routes/PortalTest/meta";
 import ScrollRestoreTest from "./routes/ScrollRestoreTest";
 import ScrollRestoreTestMeta from "./routes/ScrollRestoreTest/meta";
 
-const Stack: Stack = (props) => {
-  return (
-    <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
-      <Switch>
-        <Route path={routeMeta.path} component={IndexRoute} exact />
-        <Route path={ErrorBoundaryTestMeta.path} component={ErrorBoundaryTest} />
-        <Route path={ErrorBoundaryTest2Meta.path} component={ErrorBoundaryTest2} />
-        <Route path={HotReloadTestMeta.path} component={HotReloadTest} />
-        <Route path={DynamicRouteTestMeta.path} component={DynamicRouteTest} />
-        <Route path={PortalTestMeta.path} component={PortalTest} exact />
-        <Route path={ScrollRestoreTestMeta.path} component={ScrollRestoreTest} />
-        <Route component={NotFound} />
-      </Switch>
-    </RouteAccessControl>
-  );
+const Component: React.FC = () => {
+  const routes: PartialRouteObject[] = [
+    { path: "/", element: <IndexRoute /> },
+    { path: ErrorBoundaryTestMeta.slug + "/*", element: <ErrorBoundaryTest /> },
+    { path: ErrorBoundaryTest2Meta.slug + "/*", element: <ErrorBoundaryTest2 /> },
+    { path: HotReloadTestMeta.slug + "/*", element: <HotReloadTest /> },
+    { path: DynamicRouteTestMeta.slug + "/*", element: <DynamicRouteTest /> },
+    { path: PortalTestMeta.slug + "/*", element: <PortalTest /> },
+    { path: ScrollRestoreTestMeta.slug + "/*", element: <ScrollRestoreTest /> },
+    { path: "*", element: <NotFound /> },
+  ];
+  return <RouteAccessControl routeMeta={routeMeta}>{useRoutes(routes)}</RouteAccessControl>;
 };
-export default Stack;
+export default Component;
 
-export type StackProps = RouteComponentProps<{}>;
-export type Stack = React.FC<StackProps>;
+export type DefaultProps = {};
+export type DefaultComponent = React.FC<DefaultProps>;

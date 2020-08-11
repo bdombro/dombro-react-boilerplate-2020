@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 
 import { testUsers } from "../../../../../../state/authState/testUsers";
 import IdRouteMeta from "../[id]/meta";
-import { DefaultComponent } from "./types";
 
-const IndexRoute: DefaultComponent = (props) => {
+const IndexRoute: React.FC = () => {
   return (
     <>
       <div>Users</div>
       <ul>
         {testUsers.map((u, i) => (
-          <li>
+          <li key={i}>
             <Link to={`${IdRouteMeta.path.replace(":id", "")}${i}`}>
               {u.givenName} {u.surname}
             </Link>

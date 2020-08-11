@@ -1,10 +1,10 @@
 import qs from "query-string";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
-import TextField from "../../../../molecules/TextField";
+import TextFieldset from "../../../../molecules/TextFieldset";
 import { AuthState } from "../../../../state";
 import { adminUserAuth, normalUserAuth } from "../../../../state/authState/testUsers";
 import { isPasswordRegex, isPasswordRequirements } from "../../../../util/isPassword";
@@ -12,11 +12,15 @@ import { wait } from "../../../../util/wait";
 import forgotMeta from "../ForgotPassword/meta";
 import registerMeta from "../Register/meta";
 import routeMeta from "./meta";
-import { DefaultComponent } from "./types";
-import { FormValues } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const { history, location } = props;
+export interface FormValues {
+  email: string;
+  password: string;
+}
+
+const Component: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [auth, setAuth] = useRecoilState(AuthState);
   const { handleSubmit, register, errors } = useForm<FormValues>();
   const from = `${qs.parse(location.search).from}`.replace("undefined", "");
@@ -31,8 +35,8 @@ const Component: DefaultComponent = (props) => {
   );
 
   React.useEffect(() => {
-    if (auth.username) wait(1000).then(() => (from ? history.goBack() : history.push("/")));
-  }, [auth.username, from, history]);
+    if (auth.username) wait(1000).then(() => (from ? navigate(-1) : navigate("/")));
+  }, [auth.username, from, navigate]);
 
   if (auth.username) {
     return (
@@ -47,13 +51,13 @@ const Component: DefaultComponent = (props) => {
     <>
       <h1>{routeMeta.title}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
+        <TextFieldset
           name="email"
           labelText="Email"
           type="email"
           autoFocus
           placeholder="john@acme.com"
-          defaultValue="admin@admin.com"
+          defaultValue="admin@example.com"
           error={errors?.email?.message}
           inputRef={register({
             required: "Required",
@@ -63,7 +67,7 @@ const Component: DefaultComponent = (props) => {
             },
           })}
         />
-        <TextField
+        <TextFieldset
           name="password"
           labelText="Password"
           type="password"

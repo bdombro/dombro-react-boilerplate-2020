@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil/dist";
 
 import { authDefaultValue, AuthState } from "../../../../state";
@@ -20,5 +20,5 @@ const Logout: Logout = () => {
 };
 export default Logout;
 
-export type LogoutProps = RouteComponentProps<{}>;
+export type LogoutProps = {};
 export type Logout = React.FC<LogoutProps>;

@@ -1,8 +1,6 @@
 import React from "react";
 
-import { DefaultComponent } from "./types";
-
-const Component: DefaultComponent = (props) => {
+const Component: React.FC = () => {
   const [error, setError] = React.useState();
   if (error) throw error;
 

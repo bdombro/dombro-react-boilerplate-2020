@@ -1,10 +1,11 @@
 import { RouteMeta } from "../../../types";
-import parentMeta from "../../meta";
+import ParentMeta from "../../meta";
 
+const slug = "forgot-password";
 const routeMeta: RouteMeta = {
   title: "Forgot Password",
-  slug: "authForgotPassword",
-  path: `${parentMeta.path}/forgot-password`,
-  parent: parentMeta,
+  slug,
+  path: `${ParentMeta.path}/${slug}`,
+  parent: ParentMeta,
 };
 export default routeMeta;

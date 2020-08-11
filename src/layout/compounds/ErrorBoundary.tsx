@@ -52,9 +52,11 @@ const ErrorMessageWithPortal = ({ error, showBack }: { error: any; showBack?: bo
             <button onClick={closePortal} style={{ float: "right" }}>
               Close (X)
             </button>
-            <p>Message: {error?.message}</p>
-            <p>Stack: </p>
-            <pre dangerouslySetInnerHTML={{ __html: stackHtml }} />
+            <p>We automatically reported this issue. Bellow is the raw error if you're interested.</p>
+            <pre style={{ background: "#ccc", padding: 20, overflowX: "scroll" }}>
+              Message: {error?.message}
+              <div dangerouslySetInnerHTML={{ __html: stackHtml }} />
+            </pre>
           </div>
         </Portal>
       )}

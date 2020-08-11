@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 
 import TestsMeta from "../Tests/meta";
 import UsersMeta from "../Users/meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = () => {
+const Component: React.FC = () => {
   return (
     <>
       <div>Welcome to the dashboard!</div>

@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import IdRouteMeta from "../[id]/meta";
-import { DefaultComponent } from "./types";
 
-const IndexRoute: DefaultComponent = () => {
+const IndexRoute: React.FC = () => {
   return (
     <>
       <div>Welcome to Dynamic Route Test!</div>

@@ -1,13 +1,13 @@
 import { difference } from "lodash-es";
 import React from "react";
-import { useRecoilState } from "recoil/dist";
+import { useRecoilValue } from "recoil/dist";
 
 import { AuthState } from "../../../../state/authState";
-import { ComponentAccessControlComponent } from "./types";
+import { DefaultComponent } from "./types";
 
-export const HocAccessControl: ComponentAccessControlComponent = (props) => {
+export const HocAccessControl: DefaultComponent = (props) => {
   const { permissions = [], hidden = false, children } = props;
-  const [auth] = useRecoilState(AuthState);
+  const auth = useRecoilValue(AuthState);
   const missingPermissions = difference(permissions, auth.permissions);
   if (missingPermissions.length) {
     console.debug(`ComponentAccessControl: Blocked by ${missingPermissions.join(",")}`);

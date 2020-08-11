@@ -1,7 +1,7 @@
 import { difference } from "lodash-es";
 import React from "react";
-import { Redirect } from "react-router-dom";
-import { useRecoilState } from "recoil/dist";
+import { Navigate, useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil/dist";
 
 import { AuthState } from "../../../../state";
 import NotFound from "../../../NotFound";
@@ -12,14 +12,14 @@ const Component: DefaultComponent = (props) => {
   const {
     routeMeta: { permissions = [], hidden = false },
     children,
-    routeProps,
   } = props;
-  const [auth] = useRecoilState(AuthState);
+  const auth = useRecoilValue(AuthState);
+  const location = useLocation();
   const missingPermissions = difference(permissions, auth.permissions);
   if (missingPermissions.length) {
     console.debug(`RouteAccessControl: Blocked by ${missingPermissions.join(",")}`);
-    if (hidden || auth.username) return <NotFound {...routeProps} />;
-    return <Redirect push to={`${LoginMeta.path}?from=${routeProps.location.pathname}`} />;
+    if (hidden || auth.username) return <NotFound />;
+    return <Navigate to={`${LoginMeta.path}?from=${location.pathname}`} />;
   }
   return <>{children}</>;
 };

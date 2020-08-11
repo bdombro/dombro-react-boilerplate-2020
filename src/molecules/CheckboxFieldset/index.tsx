@@ -6,7 +6,7 @@ import { ErrorBoundary } from "../../layout/compounds/ErrorBoundary";
 import Loading from "./Loading";
 import { DefaultComponent } from "./types";
 
-const DefaultInner = React.lazy(() => import("./CheckboxField"));
+const DefaultInner = React.lazy(() => import("./CheckboxFieldSet"));
 
 const Default: DefaultComponent = (props) => (
   <ErrorBoundary>

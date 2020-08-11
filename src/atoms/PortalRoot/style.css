@@ -1,6 +1,7 @@
 #portalRoot {
     position: absolute;
-    top: 20px;
+    top: 30px;
     left: 2%;
-    width: 96%;
+    right: 4%;
+    overflow: hidden;
 }

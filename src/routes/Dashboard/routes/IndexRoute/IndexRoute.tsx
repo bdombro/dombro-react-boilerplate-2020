@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import AdminMeta from "../../../Admin/meta";
 import { HocAccessControl } from "../../../Auth/compounds/HocAccessControl";
 import ProfileMeta from "../../../Auth/routes/Profile/meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = () => {
+const Component: React.FC = () => {
   return (
     <>
       <h1>Welcome to the dashboard!</h1>
       <ul>
-        <HocAccessControl permissions={AdminMeta.permissions}>
+        <HocAccessControl permissions={AdminMeta.permissions} hidden={true}>
           <li>
             <Link to={AdminMeta.path}>Goto Admin Dashboard</Link>
           </li>

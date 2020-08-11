@@ -1,9 +1,7 @@
 import React from "react";
 import usePortal from "react-useportal/dist/usePortal";
 
-import { DefaultComponent } from "./types";
-
-const Component: DefaultComponent = () => {
+const Component: React.FC = () => {
   const [openPortal, closePortal, isOpen, Portal] = usePortal({
     bindTo: document.getElementById("portalRoot") || undefined,
     closeOnOutsideClick: true,

@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import AdminMeta from "../../meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = () => {
+const Component: React.FC = () => {
   return (
     <>
       <div>

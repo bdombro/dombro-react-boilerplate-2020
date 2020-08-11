@@ -1,5 +1,6 @@
 import React from "react";
-import { Redirect, Route, RouteComponentProps, Switch } from "react-router-dom";
+import { PartialRouteObject } from "react-router";
+import { Navigate, useRoutes } from "react-router-dom";
 
 import NotFound from "../NotFound";
 import RouteAccessControl from "./compounds/RouteAccessControl";
@@ -15,25 +16,19 @@ import ProfileMeta from "./routes/Profile/meta";
 import Register from "./routes/Register";
 import RegisterMeta from "./routes/Register/meta";
 
-const Stack: Stack = (props) => {
-  const { match } = props;
-  return (
-    <RouteAccessControl routeMeta={routeMeta} routeProps={props}>
-      <Switch>
-        <Route exact path={`${match.url}`}>
-          <Redirect to={ProfileMeta.path} />
-        </Route>
-        <Route path={ForgotPasswordMeta.path} component={ForgotPassword} />
-        <Route path={LoginMeta.path} component={Login} />
-        <Route path={LogoutMeta.path} component={Logout} />
-        <Route path={ProfileMeta.path} component={Profile} />
-        <Route path={RegisterMeta.path} component={Register} />
-        <Route component={NotFound} />
-      </Switch>
-    </RouteAccessControl>
-  );
+const Component: React.FC = () => {
+  const routes: PartialRouteObject[] = [
+    { path: "/", element: <Navigate to={ProfileMeta.slug} replace /> },
+    { path: ForgotPasswordMeta.slug + "/*", element: <ForgotPassword /> },
+    { path: LoginMeta.slug + "/*", element: <Login /> },
+    { path: LogoutMeta.slug + "/*", element: <Logout /> },
+    { path: RegisterMeta.slug + "/*", element: <Register /> },
+    { path: ProfileMeta.slug + "/*", element: <Profile /> },
+    { path: "*", element: <NotFound /> },
+  ];
+  return <RouteAccessControl routeMeta={routeMeta}>{useRoutes(routes)}</RouteAccessControl>;
 };
-export default Stack;
+export default Component;
 
-export type StackProps = RouteComponentProps<{}>;
-export type Stack = React.FC<StackProps>;
+export type DefaultProps = {};
+export type DefaultComponent = React.FC<DefaultProps>;

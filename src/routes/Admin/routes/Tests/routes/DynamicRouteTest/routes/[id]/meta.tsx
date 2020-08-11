@@ -1,10 +1,11 @@
 import { RouteMeta } from "../../../../../../../types";
-import parentMeta from "../../meta";
+import ParentMeta from "../../meta";
 
+const slug = ":id";
 const routeMeta: RouteMeta = {
   title: "Dynamic Route",
-  slug: "dynamicRouteId",
-  path: `${parentMeta.path}/:id`,
-  parent: parentMeta,
+  slug,
+  path: `${ParentMeta.path}/${slug}`,
+  parent: ParentMeta,
 };
 export default routeMeta;

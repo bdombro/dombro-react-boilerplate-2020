@@ -1,16 +1,15 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import NotFound from "../../../../../../../NotFound";
 import ParentMeta from "../../meta";
 import routeMeta from "./meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const id = props.match.params.id;
+const Component: React.FC = () => {
+  const { id } = useParams();
   useMetaTags({ title: `${routeMeta.title} #${id} - Boilerplate` }, []);
-  if (id === "2") return <NotFound {...props} />;
+  if (id === "2") return <NotFound />;
   return (
     <>
       <h1>Dynamic Route #${id}</h1>

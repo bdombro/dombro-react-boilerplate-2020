@@ -2,9 +2,8 @@ import React from "react";
 
 import { TestComponent } from "./compounds/TestComponent";
 import { TestForm } from "./compounds/TestForm";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
+const Component: React.FC = () => {
   return (
     <>
       <div>Test: (currently fails)</div>

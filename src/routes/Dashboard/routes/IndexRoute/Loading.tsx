@@ -1,9 +1,8 @@
 import React from "react";
 
 import LoadingSkeleton from "../../../../molecules/LoadingSkeleton/LoadingSkeleton";
-import { DefaultComponent } from "./types";
 
-export const Component: DefaultComponent = () => {
+export const Component: React.FC = () => {
   return (
     <div>
       <h1>

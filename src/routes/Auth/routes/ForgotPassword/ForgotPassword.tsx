@@ -1,12 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
-import TextField from "../../../../molecules/TextField";
+import TextFieldset from "../../../../molecules/TextFieldset";
 import routeMeta from "./meta";
-import { DefaultComponent, FormValues } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const { history } = props;
+interface FormValues {
+  email: string;
+}
+
+const Component: React.FC = () => {
+  const navigate = useNavigate();
   const [success, setSuccess] = React.useState(false);
   const { handleSubmit, register, errors } = useForm<FormValues>();
   const onSubmit = (data: FormValues) => {
@@ -19,7 +23,7 @@ const Component: DefaultComponent = (props) => {
       <>
         <h1>Success!</h1>
         <div>If that email matches a user, we'll send an email with instructions to reset your password.</div>
-        <button onClick={history.goBack}>Go back to login?</button>
+        <button onClick={() => navigate(-1)}>Go back to login?</button>
       </>
     );
   }
@@ -28,7 +32,7 @@ const Component: DefaultComponent = (props) => {
     <>
       <h1>{routeMeta.title}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
+        <TextFieldset
           name="email"
           labelText="Email"
           type="email"
@@ -46,7 +50,7 @@ const Component: DefaultComponent = (props) => {
         />
         <button type="submit">Submit</button>
       </form>
-      <button onClick={history.goBack}>Go back to login?</button>
+      <button onClick={() => navigate(-1)}>Go back to login?</button>
     </>
   );
 };

@@ -1,16 +1,15 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { testUsers } from "../../../../../../state/authState/testUsers";
 import NotFound from "../../../../../NotFound";
 import ParentMeta from "../../meta";
 import routeMeta from "./meta";
-import { DefaultComponent } from "./types";
 
-const Component: DefaultComponent = (props) => {
-  const id = parseInt(props.match.params.id, 10);
-  const user = testUsers?.[id];
+const Component: React.FC = (props) => {
+  const { id } = useParams();
+  const user = testUsers?.[parseInt(id, 10)];
   useMetaTags({ title: `${routeMeta.title} ${user?.givenName} ${user?.surname} - Boilerplate` }, []);
   if (!user) return <NotFound {...props} />;
   return (

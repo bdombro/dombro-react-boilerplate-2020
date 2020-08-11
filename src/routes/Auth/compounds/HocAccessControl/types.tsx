@@ -1,8 +1,8 @@
 import React from "react";
 
-export type ComponentAccessControlProps = {
+export type DefaultProps = {
   permissions?: string[];
   hidden?: boolean;
   children: React.ReactNode;
 };
-export type ComponentAccessControlComponent = React.FC<ComponentAccessControlProps>;
+export type DefaultComponent = React.FC<DefaultProps>;
