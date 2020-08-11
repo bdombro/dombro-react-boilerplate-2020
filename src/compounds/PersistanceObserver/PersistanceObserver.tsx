@@ -1,5 +1,5 @@
-import { isEqual } from "lodash-es";
 import React from "react";
+import isEqual from "react-fast-compare";
 import { useRecoilTransactionObserver_UNSTABLE } from "recoil/dist";
 
 import { AuthState } from "../../state/authState";
