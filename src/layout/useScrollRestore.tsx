@@ -15,11 +15,12 @@ const storePromise = getKeyValueStore("useScrollRestore", "historyIdToScrollUps"
 
 export function useScrollRestore(elementSelector: string) {
   const recall = React.useCallback(() => {
-    const element = document.querySelector(elementSelector);
+    const element = document.querySelector(elementSelector) as HTMLDivElement;
     if (!element) {
       console.warn("useScrollRestore.recall: Element not found");
       return;
     }
+    element.style.visibility = "hidden";
     const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
       store.get<number>(historyKey).then((scrollTop) => {
@@ -31,7 +32,10 @@ export function useScrollRestore(elementSelector: string) {
         const set = () => {
           if (!success) {
             element.scrollTop = next;
-            if (element.scrollTop === next) success = true;
+            if (element.scrollTop === next) {
+              success = true;
+              element.style.visibility = "visible";
+            }
           }
         };
         for (let i = 0; i < 3000; i += 50) setTimeout(set, i);
@@ -39,7 +43,7 @@ export function useScrollRestore(elementSelector: string) {
     });
   }, [elementSelector]);
   const save = React.useCallback(() => {
-    const element = document.querySelector(elementSelector);
+    const element = document.querySelector(elementSelector) as HTMLDivElement;
     if (!element) throw new Error("useScrollRestore.save: Element not found");
     const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
