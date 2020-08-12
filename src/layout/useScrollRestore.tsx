@@ -15,31 +15,34 @@ const storePromise = getKeyValueStore("useScrollRestore", "historyIdToScrollUps"
 
 export function useScrollRestore(elementSelector: string) {
   const recall = React.useCallback(() => {
+    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     const element = document.querySelector(elementSelector) as HTMLDivElement;
     if (!element) {
       console.warn("useScrollRestore.recall: Element not found");
       return;
     }
     element.style.visibility = "hidden";
-    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
-      store.get<number>(historyKey).then((scrollTop) => {
-        const next = scrollTop ?? 0;
+      const scrollTop = await store.get<number>(historyKey);
+      const next = scrollTop ?? 0;
 
-        // Sometimes the page may not be fully loaded. If so, retry setting scroll position
-        // many times until success.
-        let success = false;
-        const set = () => {
-          if (!success) {
-            element.scrollTop = next;
-            if (element.scrollTop === next) {
-              success = true;
-              element.style.visibility = "visible";
-            }
+      // Sometimes the page may not be fully loaded. If so, retry setting scroll position
+      // many times until success.
+      let success = false;
+      const set = () => {
+        if (!success) {
+          element.scrollTop = next;
+          if (element.scrollTop === next) {
+            success = true;
+            element.style.visibility = "visible";
           }
-        };
-        for (let i = 0; i < 3000; i += 50) setTimeout(set, i);
-      });
+        }
+      };
+      const waitTime = 3000;
+      for (let i = 0; i < waitTime; i += 50) setTimeout(set, i);
+      setTimeout(() => {
+        element.style.visibility = "visible";
+      }, waitTime);
     });
   }, [elementSelector]);
   const save = React.useCallback(() => {
@@ -67,15 +70,11 @@ export function useScrollRestore(elementSelector: string) {
     if (!element) throw new Error("useScrollRestore.effect: Element not found");
     recall();
     const savePoller = setInterval(save, 400);
-    window.addEventListener("unload", save);
-    window.addEventListener("pushstate", save);
     window.addEventListener("popstate", recall);
     return () => {
       // Add delay to popstate b/c race condition
       setTimeout(() => {
         clearInterval(savePoller);
-        window.removeEventListener("unload", save);
-        window.removeEventListener("pushstate", save);
         window.removeEventListener("popstate", recall);
       }, 100);
     };

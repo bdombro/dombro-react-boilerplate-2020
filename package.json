@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "upgrade-deps": "npx ncu -u && npm i && npm upgrade",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "prod": "npm run build && serve -s build -l 3000",
-    "analyze": "node scripts/analyze.js",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "serve": "serve -s build -l 3000",
+    "prod": "npm run build && npm run serve",
+    "analyze": "ANALYZE=1 npm run build",
+    "test": "react-app-rewired test",
     "lint": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx src"
   },
   "eslintConfig": {
@@ -44,6 +45,7 @@
   },
   "dependencies": {
     "history": "^5.0.0",
+    "preact": "^10.4.7",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -71,7 +73,8 @@
     "husky": ">=4",
     "lint-staged": ">=10",
     "prettier": "^2.0.5",
-    "react-scripts": "3.4.1",
+    "react-app-rewired": "^2.1.6",
+    "react-scripts": "^3.4.2",
     "serve": "^11.3.2",
     "typescript": "^3.9.7",
     "webpack-bundle-analyzer": "^3.8.0"

@@ -7,7 +7,7 @@ import PortalRoot from "./atoms/PortalRoot";
 import PersistenceObserver, { initializeState } from "./compounds/PersistanceObserver";
 import LoadingLayout from "./layout/LoadingLayout";
 import siteMeta from "./siteMeta";
-const Stacks = React.lazy(() => import("./routes"));
+const Routes = React.lazy(() => import("./routes"));
 
 function App() {
   useMetaTags(siteMeta, []);
@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <React.Suspense fallback={<LoadingLayout variant="outer" percentLoaded={33} />}>
           <PortalRoot />
-          <Stacks />
+          <Routes />
         </React.Suspense>
       </BrowserRouter>
     </RecoilRoot>
