@@ -10,7 +10,8 @@
     "prod": "npm run build && npm run serve",
     "analyze": "ANALYZE=1 npm run build",
     "test": "react-app-rewired test",
-    "lint": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx src"
+    "lint": "eslint --cache --fix --ext .js,.jsx,.ts,.tsx src",
+    "repl": "ts-node-dev --respawn repl"
   },
   "eslintConfig": {
     "plugins": [
@@ -55,8 +56,7 @@
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-use": "^15.3.3",
-    "react-useportal": "^1.0.13",
-    "recoil": "0.0.10"
+    "react-useportal": "^1.0.13"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -76,6 +76,7 @@
     "react-app-rewired": "^2.1.6",
     "react-scripts": "^3.4.2",
     "serve": "^11.3.2",
+    "ts-node-dev": "^1.0.0-pre.56",
     "typescript": "^3.9.7",
     "webpack-bundle-analyzer": "^3.8.0"
   },

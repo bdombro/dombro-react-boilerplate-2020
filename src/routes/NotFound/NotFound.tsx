@@ -1,15 +1,13 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
 import { Link, useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil/dist";
 
-import { authDefaultValue, AuthState } from "../../state";
+import { useAuthentication } from "../../state";
 import loginMeta from "../Auth/routes/Login/meta";
 
 const NotFound: React.FC = () => {
   const location = useLocation();
-  const [auth, setAuth] = useRecoilState(AuthState);
-  const logout = (_: React.MouseEvent<HTMLElement>) => setAuth(authDefaultValue);
+  const { state: authState, logout } = useAuthentication();
   useMetaTags({ title: `404 Note Found - Boilerplate` }, []);
   return (
     <>
@@ -17,7 +15,7 @@ const NotFound: React.FC = () => {
       <div>
         The page you request is either non-existant or you don't have access.{" "}
         <Link to={`${loginMeta.path}?from=${location.pathname}`} onClick={logout}>
-          {auth.username ? "Switch user?" : "Login?"}
+          {authState.user.username ? "Switch user?" : "Login?"}
         </Link>
       </div>
     </>

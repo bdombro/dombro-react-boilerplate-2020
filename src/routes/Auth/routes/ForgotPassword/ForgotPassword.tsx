@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import TextFieldset from "../../../../molecules/TextFieldset";
+import { UserFields } from "../../../../state/authentication/mockApi/types";
 import routeMeta from "./meta";
 
 interface FormValues {
@@ -33,7 +34,7 @@ const Component: React.FC = () => {
       <h1>{routeMeta.title}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextFieldset
-          name="email"
+          name={UserFields.email}
           labelText="Email"
           type="email"
           autoFocus

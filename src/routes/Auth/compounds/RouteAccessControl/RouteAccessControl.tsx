@@ -1,8 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useRecoilValue } from "recoil/dist";
 
-import { AuthState } from "../../../../state";
+import { useAuthentication } from "../../../../state/authentication";
 import arrayDifference from "../../../../util/arrayDifference";
 import NotFound from "../../../NotFound";
 import LoginMeta from "../../routes/Login/meta";
@@ -13,12 +12,12 @@ const Component: DefaultComponent = (props) => {
     routeMeta: { permissions = [], hidden = false },
     children,
   } = props;
-  const auth = useRecoilValue(AuthState);
+  const { state: authState } = useAuthentication();
   const location = useLocation();
-  const missingPermissions = arrayDifference(permissions, auth.permissions);
+  const missingPermissions = arrayDifference(permissions, authState.user.permissions);
   if (missingPermissions.length) {
     console.debug(`RouteAccessControl: Blocked by ${missingPermissions.join(",")}`);
-    if (hidden || auth.username) return <NotFound />;
+    if (hidden || authState.user.username) return <NotFound />;
     return <Navigate to={`${LoginMeta.path}?from=${location.pathname}`} />;
   }
   return <>{children}</>;

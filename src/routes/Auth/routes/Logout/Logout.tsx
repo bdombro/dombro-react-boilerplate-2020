@@ -1,15 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil/dist";
 
-import { authDefaultValue, AuthState } from "../../../../state";
+import { useAuthentication } from "../../../../state/authentication";
 import LoginMeta from "../Login/meta";
 
 const Logout: Logout = () => {
-  const [, setAuth] = useRecoilState(AuthState);
+  const { logout } = useAuthentication();
   React.useEffect(() => {
-    setAuth(authDefaultValue);
-  }, [setAuth]);
+    logout();
+  }, [logout]);
   return (
     <>
       <div>

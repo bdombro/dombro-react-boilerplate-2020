@@ -47,7 +47,10 @@ export function useScrollRestore(elementSelector: string) {
   }, [elementSelector]);
   const save = React.useCallback(() => {
     const element = document.querySelector(elementSelector) as HTMLDivElement;
-    if (!element) throw new Error("useScrollRestore.save: Element not found");
+    if (!element) {
+      console.warn("useScrollRestore.save: Element not found");
+      return;
+    }
     const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
     storePromise.then(async (store) => {
       const scrollTopNow = element.scrollTop;
