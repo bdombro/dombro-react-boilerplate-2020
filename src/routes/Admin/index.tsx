@@ -3,8 +3,8 @@ import { PartialRouteObject } from "react-router";
 import { useRoutes } from "react-router-dom";
 
 import RouteAccessControl from "../Auth/compounds/RouteAccessControl";
-import routeMeta from "../Auth/meta";
 import NotFound from "../NotFound";
+import routeMeta from "./meta";
 import IndexRoute from "./routes/IndexRoute";
 import Tests from "./routes/Tests";
 import TestsMeta from "./routes/Tests/meta";
