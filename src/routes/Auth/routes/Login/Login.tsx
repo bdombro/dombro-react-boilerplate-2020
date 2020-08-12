@@ -1,4 +1,3 @@
-import qs from "query-string";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -18,7 +17,9 @@ const Component: React.FC = () => {
   const navigate = useNavigate();
   const { state: authState, login } = useAuthentication();
   const { handleSubmit, register: registerField, errors, setError } = useForm<FormValues>();
-  const from = `${qs.parse(location.search).from}`.replace("undefined", "");
+  const qs = new URLSearchParams(location.search);
+  let from = qs.get("from");
+  if (from === "undefined") from = null;
 
   const onSubmit = React.useCallback(
     async (values: FormValues) => {

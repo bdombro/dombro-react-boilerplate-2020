@@ -1,4 +1,3 @@
-import qs from "query-string";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -18,8 +17,10 @@ const Component: React.FC = () => {
   const navigate = useNavigate();
   const { state: authState, register } = useAuthentication();
   const { handleSubmit, register: registerField, errors, setError } = useForm<FormValues>();
+  const qs = new URLSearchParams(location.search);
+  let from = qs.get("from");
   // TODO: Figure out why we get redirected to ?from=undefined when going directly to /auth/register (same as login)
-  const from = `${qs.parse(location.search).from}`.replace("undefined", "");
+  if (from === "undefined") from = null;
 
   const onSubmit = React.useCallback(
     async (values: FormValues) => {
