@@ -9,9 +9,11 @@
  */
 import React from "react";
 
-import { getKeyValueStore } from "../util/indexedDbKeyValueStore";
+import { getKeyValueStore, KeyValueStore } from "../util/indexedDbKeyValueStore";
 
-const storePromise = getKeyValueStore("useScrollRestore", "historyIdToScrollUps", 48 * 60 * 60 * 1000);
+// @ts-ignore: Ignore when null b/c we never access storePromise when env = test
+const storePromise: Promise<KeyValueStore> =
+  process.env.NODE_ENV !== "test" && getKeyValueStore("useScrollRestore", "historyIdToScrollUps", 48 * 60 * 60 * 1000);
 
 export function useScrollRestore(elementSelector: string) {
   const recall = React.useCallback(() => {
@@ -69,8 +71,7 @@ export function useScrollRestore(elementSelector: string) {
   }, [elementSelector]);
 
   React.useEffect(() => {
-    const element = document.querySelector(elementSelector);
-    if (!element) throw new Error("useScrollRestore.effect: Element not found");
+    if (process.env.NODE_ENV === "test") return;
     recall();
     const savePoller = setInterval(save, 400);
     window.addEventListener("popstate", recall);
