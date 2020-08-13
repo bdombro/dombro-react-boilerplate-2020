@@ -10,64 +10,62 @@
 import React from "react";
 
 import { getKeyValueStore, KeyValueStore } from "../util/indexedDbKeyValueStore";
+import { waitFor } from "../util/wait";
 
 // @ts-ignore: Ignore when null b/c we never access storePromise when env = test
 const storePromise: Promise<KeyValueStore> =
   process.env.NODE_ENV !== "test" && getKeyValueStore("useScrollRestore", "historyIdToScrollUps", 48 * 60 * 60 * 1000);
 
-export function useScrollRestore(elementSelector: string) {
-  const recall = React.useCallback(() => {
-    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
-    const element = document.querySelector(elementSelector) as HTMLDivElement;
-    if (!element) {
-      console.warn("useScrollRestore.recall: Element not found");
-      return;
-    }
-    element.style.visibility = "hidden";
-    storePromise.then(async (store) => {
-      const scrollTop = await store.get<number>(historyKey);
-      const next = scrollTop ?? 0;
+const getElement = (selector: string) => document.querySelector(selector) as HTMLDivElement;
 
-      // Sometimes the page may not be fully loaded. If so, retry setting scroll position
-      // many times until success.
-      let success = false;
-      const set = () => {
-        if (!success) {
-          element.scrollTop = next;
-          if (element.scrollTop === next) {
-            success = true;
-            element.style.visibility = "visible";
-          }
+export function useScrollRestore(elementSelector: string) {
+  const recall = React.useCallback(async () => {
+    const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
+    let element = getElement(elementSelector);
+    // If element not yet available, wait for it or bail
+    if (!element) element = await waitFor(() => getElement(elementSelector), { interval: 50, timeout: 2000 });
+    element.style.visibility = "hidden";
+    const store = await storePromise;
+    const next = (await store.get<number>(historyKey)) ?? 0;
+
+    // Sometimes the page may not be fully loaded. If so, retry setting scroll position
+    // many times until success.
+    let success = false;
+    const set = () => {
+      if (!success) {
+        element.scrollTop = next;
+        if (element.scrollTop === next) {
+          success = true;
+          element.style.visibility = "visible";
         }
-      };
-      const waitTime = 3000;
-      for (let i = 0; i < waitTime; i += 50) setTimeout(set, i);
-      setTimeout(() => {
-        element.style.visibility = "visible";
-      }, waitTime);
-    });
+      }
+    };
+    const waitTime = 3000;
+    for (let i = 0; i < waitTime; i += 50) setTimeout(set, i);
+    setTimeout(() => {
+      element.style.visibility = "visible";
+    }, waitTime);
   }, [elementSelector]);
-  const save = React.useCallback(() => {
+  const save = React.useCallback(async () => {
     const element = document.querySelector(elementSelector) as HTMLDivElement;
     if (!element) {
       console.warn("useScrollRestore.save: Element not found");
       return;
     }
     const historyKey = window.history.state?.key ?? "entry"; // is null on first page view
-    storePromise.then(async (store) => {
-      const scrollTopNow = element.scrollTop;
-      // If 0, don't save and remove stale saves here to reduce memory footprint
-      if (scrollTopNow === 0) {
-        const scrollTopLast = await store.get<number>(historyKey);
-        // if scrollTopLast, is stale and remove it
-        if (scrollTopLast !== undefined) {
-          await store.remove(historyKey);
-        }
-        // else no-op
-      } else {
-        await store.set(historyKey, element.scrollTop);
+    const store = await storePromise;
+    const scrollTopNow = element.scrollTop;
+    // If 0, don't save and remove stale saves here to reduce memory footprint
+    if (scrollTopNow === 0) {
+      const scrollTopLast = await store.get<number>(historyKey);
+      // if scrollTopLast, is stale and remove it
+      if (scrollTopLast !== undefined) {
+        await store.remove(historyKey);
       }
-    });
+      // else no-op
+    } else {
+      await store.set(historyKey, element.scrollTop);
+    }
   }, [elementSelector]);
 
   React.useEffect(() => {
